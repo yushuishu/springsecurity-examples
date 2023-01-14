@@ -1,0 +1,38 @@
+package com.shuishu.demo.springsecurity;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+
+/**
+ * @author ：谁书-ss
+ * @date   ： 2022-12-28 21:21
+ * @IDE    ：IntelliJ IDEA
+ * @Motto  ：ABC(Always Be Coding)
+ * <p></p>
+ * @Description ：
+ * {@link <a href="https://docs.spring.io/spring-security/reference/whats-new.html">...</a>}
+ *
+ * SpringSecurity 实现功能：
+ *      1、使用用户名+密码+验证码+记住我功能进行登陆
+ *      2、CSRF校验  将Token交给Redis管理
+ *      3、将记住我功能持久化到数据库
+ *
+ * <p></p>
+ * 基础组件
+ *      验证码
+ *      MyUserDetailsServiceImpl (认证/权限信息)
+ *      MyAuthenticationHandler (Handler)
+ *      MyRememberMeServices (记住我)
+ * 核心组件
+ *      UsernamePasswordLoginFilter (登陆过滤器)
+ *      SecurityConfig (核心配置)
+ */
+@SpringBootApplication
+public class SpringsecurityExamplesApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(SpringsecurityExamplesApplication.class, args);
+    }
+
+}
