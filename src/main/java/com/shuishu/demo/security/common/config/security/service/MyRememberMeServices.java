@@ -1,4 +1,4 @@
-package com.shuishu.demo.security.common.config.security;
+package com.shuishu.demo.security.common.config.security.service;
 
 
 import jakarta.servlet.http.HttpServletRequest;

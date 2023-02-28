@@ -1,7 +1,8 @@
-package com.shuishu.demo.security.common.config.security;
+package com.shuishu.demo.security.common.config.security.filter;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.shuishu.demo.security.common.config.security.service.MyRememberMeServices;
 import com.shuishu.demo.security.common.config.security.handler.MyAuthenticationHandler;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
