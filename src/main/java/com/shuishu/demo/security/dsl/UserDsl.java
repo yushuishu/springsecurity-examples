@@ -37,10 +37,10 @@ public class UserDsl extends BaseDsl {
             builder.and(qUser.userId.eq(userDTO.getUserId()));
         }
         if (userDTO.getUserExpired() != null){
-            builder.and(qUser.userExpired.eq(userDTO.getUserExpired()));
+            builder.and(qUser.isAccountNonExpired.eq(userDTO.getUserExpired()));
         }
         if (userDTO.getUserLocked() != null){
-            builder.and(qUser.userLocked.eq(userDTO.getUserLocked()));
+            builder.and(qUser.isAccountNonLocked.eq(userDTO.getUserLocked()));
         }
         if (StringUtils.hasText(userDTO.getNickname())){
             builder.and(qUser.nickname.like("%" + userDTO.getNickname() + "%"));
@@ -52,8 +52,8 @@ public class UserDsl extends BaseDsl {
         List<UserVO> fetch = jpaQueryFactory.select(Projections.fields(UserVO.class,
                         qUser.userId,
                         qUser.nickname,
-                        qUser.userExpired,
-                        qUser.userLocked,
+                        qUser.isAccountNonExpired,
+                        qUser.isAccountNonLocked,
                         qUser.userPhoto
                 ))
                 .from(qUser)

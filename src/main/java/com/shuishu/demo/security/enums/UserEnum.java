@@ -20,6 +20,7 @@ public interface UserEnum {
         PHONE("PHONE", "手机号"),
         QQ("QQ", "QQ号"),
         QQ_EMAIL("QQ_EMAIL", "QQ邮箱"),
+        WX("WX", "微信"),
         ZFB("ZFB", "支付宝"),
         GITHUB("GITHUB", "GitHub号"),
         GOOGLE("GOOGLE", "Google邮箱号"),

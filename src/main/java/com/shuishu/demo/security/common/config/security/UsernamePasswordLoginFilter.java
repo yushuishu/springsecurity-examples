@@ -1,13 +1,13 @@
-/*
-package com.shuishu.demo.springsecurity.common.config.security;
+package com.shuishu.demo.security.common.config.security;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.shuishu.demo.security.common.config.security.handler.MyAuthenticationHandler;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.stereotype.Component;
 
-*/
+
 /**
  * @author ：谁书-ss
  * @date ：2022-12-29 22:11
@@ -25,8 +25,7 @@ import org.springframework.stereotype.Component;
  *     如果Content-Type是Json，则从Body中获取请求参数，否则从Form表单中获取
  *     从Session的Attribute中获取之前保存的验证码，和用户提供的验证码进行比对
  *     把用户提供的rememberMe字段放到request的Attribute中，供后续MyRememberMeServices获取
- *//*
-
+ */
 @Component
 public class UsernamePasswordLoginFilter extends UsernamePasswordAuthenticationFilter {
     private final ObjectMapper objectMapper = new ObjectMapper();
@@ -43,4 +42,4 @@ public class UsernamePasswordLoginFilter extends UsernamePasswordAuthenticationF
         setFilterProcessesUrl("/sys/user/login");
     }
 }
-*/
+

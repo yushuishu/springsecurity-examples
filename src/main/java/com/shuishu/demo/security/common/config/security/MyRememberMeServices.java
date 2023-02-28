@@ -1,5 +1,4 @@
-/*
-package com.shuishu.demo.springsecurity.common.config.security;
+package com.shuishu.demo.security.common.config.security;
 
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -11,7 +10,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.UUID;
 
-*/
+
 /**
  * @author ：谁书-ss
  * @date ：2022-12-31 11:00
@@ -21,8 +20,7 @@ import java.util.UUID;
  * @Description ：记住我
  * 1、从request的Attribute中获取rememberMe字段
  * 2、当字段值为TRUE_VALUES表的成员时认为需要开启记住我功能
- *//*
-
+ */
 @Component
 public class MyRememberMeServices extends PersistentTokenBasedRememberMeServices {
     public static final String REMEMBER_ME_KEY = "rememberMe";
@@ -33,6 +31,14 @@ public class MyRememberMeServices extends PersistentTokenBasedRememberMeServices
     }
 
 
+    /**
+     * 自定义获取 remember-me 方式
+     *
+     * @param request   the request submitted from an interactive login, which may include
+     *                  additional information indicating that a persistent login is desired.
+     * @param parameter the configured remember-me parameter name.
+     * @return -
+     */
     @Override
     protected boolean rememberMeRequested(HttpServletRequest request, String parameter) {
         final String rememberMe = (String) request.getAttribute(REMEMBER_ME_KEY);
@@ -46,4 +52,3 @@ public class MyRememberMeServices extends PersistentTokenBasedRememberMeServices
         return super.rememberMeRequested(request, parameter);
     }
 }
-*/

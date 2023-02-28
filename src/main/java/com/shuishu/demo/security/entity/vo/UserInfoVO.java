@@ -2,6 +2,8 @@ package com.shuishu.demo.security.entity.vo;
 
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.shuishu.demo.security.enums.UserEnum;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -24,6 +26,7 @@ import java.util.*;
 @Setter
 @Getter
 @ToString
+@AllArgsConstructor(staticName = "createUser")
 public class UserInfoVO implements UserDetails {
     @Serial
     private static final long serialVersionUID = -7850778107226817897L;
@@ -45,47 +48,55 @@ public class UserInfoVO implements UserDetails {
      */
     private String userPhoto;
     /**
-     * 用户是否过期
+     * 地址
      */
-    private Boolean userExpired;
+    private String userAddress;
     /**
-     * 用户是被锁定
+     * 职业
      */
-    private Boolean userLocked;
+    private String userJob;
     /**
-     * 用户授权id
+     * 用户过期 true：没有过期  false：过期
      */
-    private Long userAuthId;
+    private Boolean isAccountNonExpired;
     /**
-     * 登录类型
-     * LOCAL:本系统账号
-     * PHONE:手机号  EMAIL:邮箱
-     * QQ:企鹅号  WX:微信号
-     * GITHUB: github号  GOOGLE:Google邮箱号
+     * 用户锁定 true：没有锁定  false：被锁定
      */
-    private String userAuthType;
-    /**
-     * 登录号，唯一识别码
-     */
-    private String userAuthIdentifier;
-    /**
-     * 凭证
-     */
-    private String userAuthCredential;
-    /**
-     * 昵称
-     */
-    private String userAuthNickname;
-    /**
-     * 头像
-     */
-    private String userAuthPhoto;
+    private Boolean isAccountNonLocked;
     /**
      * 最后一次登录时间
      */
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date userAuthLastLoginDate;
+    /**
+     * 用户授权id
+     */
+    private Long userAuthId;
+    /**
+     * 授权类型
+     */
+    private String userAuthType;
+    /**
+     * 登录号：唯一识别码
+     */
+    private String userAuthIdentifier;
+    /**
+     * 凭证信息
+     */
+    private String userAuthCredential;
+    /**
+     * 刷新token
+     */
+    private String userAuthRefreshToken;
+    /**
+     * 授权昵称
+     */
+    private String userAuthNickname;
+    /**
+     * 授权头像
+     */
+    private String userAuthPhoto;
     /**
      * 角色集合
      */
@@ -116,12 +127,12 @@ public class UserInfoVO implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return !userExpired;
+        return isAccountNonExpired;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return !userLocked;
+        return isAccountNonLocked;
     }
 
     @Override

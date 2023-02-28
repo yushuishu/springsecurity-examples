@@ -6,7 +6,9 @@ import com.shuishu.demo.security.common.config.domain.PageVO;
 import com.shuishu.demo.security.entity.dto.UserAddDTO;
 import com.shuishu.demo.security.entity.dto.UserDTO;
 import com.shuishu.demo.security.entity.dto.UserUpdateDTO;
+import com.shuishu.demo.security.entity.vo.UserInfoVO;
 import com.shuishu.demo.security.entity.vo.UserVO;
+import com.shuishu.demo.security.enums.UserEnum;
 
 /**
  * @author ：谁书-ss
@@ -17,6 +19,14 @@ import com.shuishu.demo.security.entity.vo.UserVO;
  * @Description ：
  */
 public interface UserService {
+    /**
+     * 账号查询
+     *
+     * @param userAuthIdentifier 账号
+     * @return 用户信息
+     */
+    UserInfoVO findByUserAuthIdentifier(String userAuthIdentifier, UserEnum.AuthType authType);
+
     /**
      * 添加用户
      *

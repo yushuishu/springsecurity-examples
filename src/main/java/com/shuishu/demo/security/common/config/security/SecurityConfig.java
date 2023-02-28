@@ -1,7 +1,8 @@
-/*
-package com.shuishu.demo.springsecurity.common.config.security;
+package com.shuishu.demo.security.common.config.security;
 
 
+import com.shuishu.demo.security.common.config.security.handler.MyAuthenticationHandler;
+import com.shuishu.demo.security.common.config.security.service.MyUserDetailsServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -19,7 +20,7 @@ import org.springframework.security.web.csrf.CsrfTokenRequestAttributeHandler;
 import javax.sql.DataSource;
 import java.util.List;
 
-*/
+
 /**
  * @author ：谁书-ss
  * @date ：2022-12-29 21:59
@@ -27,51 +28,43 @@ import java.util.List;
  * @Motto ：ABC(Always Be Coding)
  * <p></p>
  * @Description ：SpringSecurity 配置
- *//*
+ */
 
 @Configuration
-public class MySecurityConfig {
-    */
-/**
+public class SecurityConfig {
+    /**
      * 接口文档放行
-     *//*
-
+     */
     public static final List<String> DOC_WHITE_LIST = List.of("/doc.html", "/webjars/**", "/v3/api-docs/**");
-    */
-/**
+    /**
      * 验证码放行
-     *//*
-
+     */
     public static final List<String> VERIFY_CODE_WHITE_LIST = List.of("/sys/verifyCode/**");
 
 
 
-    */
-/**
+    /**
      * 获取 AuthenticationManager（认证管理器），登录时认证使用
      * 提供了 UsernamePasswordLoginFilter 需要的 AuthenticationManager
      *
      * @param authenticationConfiguration 认证配置
      * @return 认证管理器
      * @throws Exception 异常
-     *//*
-
+     */
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
 
         return authenticationConfiguration.getAuthenticationManager();
     }
 
-    */
-/**
+    /**
      * 允许抛出用户不存在的异常
      * 提供了 MyRememberMeServices 需要的 PersistentTokenRepository
      * 其中 setCreateTableOnStartup()方法在首次运行的时候需要解开注释让它自动建表
      *
      * @param myUserDetailsService myUserDetailsService
      * @return DaoAuthenticationProvider
-     *//*
-
+    */
     @Bean
     public DaoAuthenticationProvider daoAuthenticationProvider(MyUserDetailsServiceImpl myUserDetailsService) {
         final DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
@@ -81,11 +74,12 @@ public class MySecurityConfig {
         return provider;
     }
 
-    */
-/**
+    /**
      * 自定义RememberMe服务token持久化仓库
-     *//*
-
+     *
+     * @param datasource datasource
+     * @return -
+     */
     @Bean
     public PersistentTokenRepository persistentTokenRepository(DataSource datasource) {
         final JdbcTokenRepositoryImpl tokenRepository = new JdbcTokenRepositoryImpl();
@@ -113,33 +107,38 @@ public class MySecurityConfig {
                 .requestMatchers(VERIFY_CODE_WHITE_LIST.toArray(new String[0])).permitAll()
                 .requestMatchers("/api/shuishu/demo/user/login").permitAll()
                 .anyRequest().authenticated();
+
+        httpSecurity.formLogin()
+                .usernameParameter("userAuthIdentifier")
+                .passwordParameter("userAuthCredential")
+                .loginProcessingUrl("/login")
+                .successHandler(myAuthenticationHandler)
+                .failureHandler(myAuthenticationHandler)
+                .and()
+                .logout()
+                .logoutUrl("/user/logout")
+                .logoutSuccessHandler(myAuthenticationHandler)
+                .and()
+                .rememberMe().rememberMeServices(myRememberMeServices)
+                .and()
+                .csrf()
+                .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+                .csrfTokenRequestHandler(new CsrfTokenRequestAttributeHandler())
+                .and()
+                .exceptionHandling()
+                .accessDeniedHandler(myAuthenticationHandler)
+                .authenticationEntryPoint(myAuthenticationHandler)
+                .and()
+                .sessionManagement()
+                .maximumSessions(1)
+                .expiredSessionStrategy(myAuthenticationHandler)
+                .maxSessionsPreventsLogin(false);
+
         // 登录
         httpSecurity.addFilterAt(usernamePasswordLoginFilter, UsernamePasswordAuthenticationFilter.class);
-        httpSecurity.formLogin().successHandler(myAuthenticationHandler);
-        // 退出登录
-        httpSecurity.logout().logoutUrl("/user/logout").logoutSuccessHandler(myAuthenticationHandler);
-        // 禁用CSRF
-        //httpSecurity.csrf().disable();
-        // CSRF验证 存储到Cookie中
-        httpSecurity.csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-                .csrfTokenRequestHandler(new CsrfTokenRequestAttributeHandler());
-        //会话管理
-        httpSecurity.sessionManagement()
-                .maximumSessions(1)
-                .expiredSessionStrategy(myAuthenticationHandler);
-                // 引入redis-session依赖后已不再需要手动配置 sessionRegistry
-                //.sessionRegistry(new SpringSessionBackedSessionRegistry<>(new RedisIndexedSessionRepository(RedisConfig.createRedisTemplate())))
-                // 禁止后登陆挤下线
-               //.maxSessionsPreventsLogin(true);
-        // RememberMe
-        httpSecurity.rememberMe().rememberMeServices(myRememberMeServices);
-        // 权限不足时的处理
-        httpSecurity.exceptionHandling()
-                .accessDeniedHandler(myAuthenticationHandler)
-                .authenticationEntryPoint(myAuthenticationHandler);
+
 
         return httpSecurity.build();
     }
 
 }
-*/

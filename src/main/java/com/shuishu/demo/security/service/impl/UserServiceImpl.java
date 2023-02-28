@@ -14,6 +14,9 @@ import com.shuishu.demo.security.entity.po.Role;
 import com.shuishu.demo.security.entity.po.User;
 import com.shuishu.demo.security.entity.po.UserAuth;
 import com.shuishu.demo.security.entity.po.UserRole;
+import com.shuishu.demo.security.entity.vo.PermissionInfoVO;
+import com.shuishu.demo.security.entity.vo.RoleInfoVO;
+import com.shuishu.demo.security.entity.vo.UserInfoVO;
 import com.shuishu.demo.security.entity.vo.UserVO;
 import com.shuishu.demo.security.enums.UserEnum;
 import com.shuishu.demo.security.repository.RoleRepository;
@@ -59,6 +62,28 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
+    public UserInfoVO findByUserAuthIdentifier(String userAuthIdentifier, UserEnum.AuthType authType) {
+        UserInfoVO userInfoVO = userAuthDsl.findByUserAuthIdentifier(userAuthIdentifier, authType.getType());
+        if (userInfoVO == null){
+            return null;
+        }
+        // 角色
+        List<RoleInfoVO> roleInfoList = roleDsl.findRoleInfoByUserId(userInfoVO.getUserId());
+        if (!ObjectUtils.isEmpty(roleInfoList)){
+            // 权限
+            List<PermissionInfoVO> permissionInfoList = new ArrayList<>();
+            roleInfoList.forEach(t -> {
+                if (!ObjectUtils.isEmpty(t.getPermissionInfoList())){
+                    permissionInfoList.addAll(t.getPermissionInfoList());
+                }
+            });
+            userInfoVO.setPermissionInfoList(permissionInfoList);
+        }
+
+        return userInfoVO;
+    }
+
+    @Override
     public void addUser(UserAddDTO userAddDTO) {
         if (!UserEnum.AuthType.verifyType(userAddDTO.getUserAuthType())){
             throw new BusinessException("账号类型不存在");
@@ -74,8 +99,9 @@ public class UserServiceImpl implements UserService {
         // 保存用户基本信息
         User user = new User();
         BeanUtils.copyProperties(userAddDTO, user);
-        user.setUserExpired(false);
-        user.setUserLocked(false);
+        user.setIsAccountNonExpired(true);
+        user.setIsAccountNonLocked(true);
+        user.setUserAuthLastLoginDate(new Date());
         User dbUser = userRepository.saveAndFlush(user);
 
         // 保存用户账号信息

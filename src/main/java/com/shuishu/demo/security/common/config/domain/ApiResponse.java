@@ -3,6 +3,7 @@ package com.shuishu.demo.security.common.config.domain;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 /**
@@ -15,6 +16,9 @@ import java.io.Serializable;
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ApiResponse<T> implements Serializable {
+    @Serial
+    private static final long serialVersionUID = -657368404509719862L;
+
     private int code;
 
     private String message;
