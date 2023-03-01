@@ -40,7 +40,7 @@ public class UsernamePasswordLoginFilter extends UsernamePasswordAuthenticationF
         //rememberMe
         setRememberMeServices(rememberMeServices);
         //登陆使用的路径
-        setFilterProcessesUrl("/sys/user/login");
+        setFilterProcessesUrl("/api/fyne/demo/auth/local");
     }
 }
 

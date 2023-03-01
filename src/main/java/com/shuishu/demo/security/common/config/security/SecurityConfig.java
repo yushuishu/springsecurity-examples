@@ -5,12 +5,14 @@ import com.shuishu.demo.security.common.config.security.filter.UsernamePasswordL
 import com.shuishu.demo.security.common.config.security.handler.MyAuthenticationHandler;
 import com.shuishu.demo.security.common.config.security.service.MyRememberMeServices;
 import com.shuishu.demo.security.common.config.security.service.MyUserDetailsServiceImpl;
+import jakarta.annotation.Resource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -18,6 +20,7 @@ import org.springframework.security.web.authentication.rememberme.JdbcTokenRepos
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.csrf.CsrfTokenRequestAttributeHandler;
+import org.springframework.security.web.util.matcher.RequestMatcher;
 
 import javax.sql.DataSource;
 import java.util.List;
@@ -34,16 +37,8 @@ import java.util.List;
 
 @Configuration
 public class SecurityConfig {
-    /**
-     * 接口文档放行
-     */
-    public static final List<String> DOC_WHITE_LIST = List.of("/doc.html", "/webjars/**", "/v3/api-docs/**");
-    /**
-     * 验证码放行
-     */
-    public static final List<String> VERIFY_CODE_WHITE_LIST = List.of("/sys/verifyCode/**");
-
-
+    @Resource
+    private IgnoreUrlConfig ignoreUrlConfig;
 
     /**
      * 获取 AuthenticationManager（认证管理器），登录时认证使用
@@ -105,24 +100,23 @@ public class SecurityConfig {
         // 路径配置 （authorizeRequests 方法已废弃，取而代之的是 authorizeHttpRequests）
         // http.antMatcher()不再可用，并被替换为 http.securityMatcher() 或 httpSecurity.requestMatchers()
         httpSecurity.authorizeHttpRequests()
-                .requestMatchers(DOC_WHITE_LIST.toArray(new String[0])).permitAll()
-                .requestMatchers(VERIFY_CODE_WHITE_LIST.toArray(new String[0])).permitAll()
-                .requestMatchers("/api/shuishu/demo/user/login").permitAll()
+                .requestMatchers(ignoreUrlConfig.getUrls().toArray(new String[0])).permitAll()
                 .anyRequest().authenticated();
 
         httpSecurity.formLogin()
                 .usernameParameter("userAuthIdentifier")
                 .passwordParameter("userAuthCredential")
-                .loginProcessingUrl("/login")
+                .loginProcessingUrl("/api/fyne/demo/auth/local")
                 .successHandler(myAuthenticationHandler)
                 .failureHandler(myAuthenticationHandler)
                 .and()
                 .logout()
-                .logoutUrl("/user/logout")
+                .logoutUrl("/api/fyne/demo/auth/logout")
                 .logoutSuccessHandler(myAuthenticationHandler)
                 .and()
                 .rememberMe().rememberMeServices(myRememberMeServices)
                 .and()
+                .addFilterAt(usernamePasswordLoginFilter, UsernamePasswordAuthenticationFilter.class)
                 .csrf()
                 .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
                 .csrfTokenRequestHandler(new CsrfTokenRequestAttributeHandler())
@@ -131,14 +125,7 @@ public class SecurityConfig {
                 .accessDeniedHandler(myAuthenticationHandler)
                 .authenticationEntryPoint(myAuthenticationHandler)
                 .and()
-                .sessionManagement()
-                .maximumSessions(1)
-                .expiredSessionStrategy(myAuthenticationHandler)
-                .maxSessionsPreventsLogin(false);
-
-        // 登录
-        httpSecurity.addFilterAt(usernamePasswordLoginFilter, UsernamePasswordAuthenticationFilter.class);
-
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         return httpSecurity.build();
     }

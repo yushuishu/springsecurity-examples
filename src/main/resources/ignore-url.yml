@@ -1,0 +1,8 @@
+ignore:
+  urls:
+#    swagger
+    - /api/fyne/demo/doc.html
+    - /api/fyne/demo/webjars/**
+    - /api/fyne/demo/v3/api-docs/**
+#    登录
+    - /api/fyne/demo/auth/**
