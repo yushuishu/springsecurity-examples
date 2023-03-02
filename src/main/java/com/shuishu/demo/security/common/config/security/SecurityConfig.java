@@ -104,6 +104,7 @@ public class SecurityConfig {
                 .anyRequest().authenticated();
 
         httpSecurity.formLogin()
+                .disable()
                 .usernameParameter("userAuthIdentifier")
                 .passwordParameter("userAuthCredential")
                 .loginProcessingUrl("/api/fyne/demo/auth/local")

@@ -58,6 +58,9 @@ public class MyAuthenticationHandler implements AuthenticationSuccessHandler, Au
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
         // 清理使用过的验证码 (Redis)
 
+        // 生成token
+
+
         ResponseUtils.responseJson(response, ApiResponse.of(HttpStatus.OK.value(), "登录成功"));
     }
 

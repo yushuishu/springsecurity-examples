@@ -4,9 +4,17 @@ package com.shuishu.demo.security.common.config.security.filter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.shuishu.demo.security.common.config.security.service.MyRememberMeServices;
 import com.shuishu.demo.security.common.config.security.handler.MyAuthenticationHandler;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.stereotype.Component;
+
+import java.io.IOException;
 
 
 /**
@@ -28,19 +36,16 @@ import org.springframework.stereotype.Component;
  *     把用户提供的rememberMe字段放到request的Attribute中，供后续MyRememberMeServices获取
  */
 @Component
-public class UsernamePasswordLoginFilter extends UsernamePasswordAuthenticationFilter {
+public class UsernamePasswordLoginFilter extends AbstractAuthenticationProcessingFilter {
     private final ObjectMapper objectMapper = new ObjectMapper();
 
-    public UsernamePasswordLoginFilter(AuthenticationManager authenticationManager,
-                                       MyAuthenticationHandler authenticationHandler,
-                                       MyRememberMeServices rememberMeServices) throws Exception {
-        super(authenticationManager);
-        setAuthenticationFailureHandler(authenticationHandler);
-        setAuthenticationSuccessHandler(authenticationHandler);
-        //rememberMe
-        setRememberMeServices(rememberMeServices);
-        //登陆使用的路径
-        setFilterProcessesUrl("/api/fyne/demo/auth/local");
+    protected UsernamePasswordLoginFilter(String defaultFilterProcessesUrl) {
+        super(defaultFilterProcessesUrl);
+    }
+
+    @Override
+    public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException, IOException, ServletException {
+        return null;
     }
 }
 
