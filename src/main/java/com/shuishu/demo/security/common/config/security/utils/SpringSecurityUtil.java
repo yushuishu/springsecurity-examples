@@ -1,4 +1,4 @@
-package com.shuishu.demo.security.common.config.security;
+package com.shuishu.demo.security.common.config.security.utils;
 
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -18,6 +18,15 @@ import org.springframework.web.context.request.ServletRequestAttributes;
  * @Description ：Spring Security 工具类
  */
 public class SpringSecurityUtil {
+    public static final String LOGIN_URL_LOCAL = "/api/shuishu/demo/auth/local";
+    public static final String LOGIN_URL_PHONE = "/api/shuishu/demo/auth/phone";
+    public static final String LOGIN_URL_EMAIL = "/api/shuishu/demo/auth/email";
+
+    public static final String LOGIN_USERNAME_KEY = "userAuthIdentifier";
+    public static final String LOGIN_PASSWORD_KEY = "userAuthCredential";
+    public static final String LOGIN_CAPTCHA= "captcha";
+
+
     /**
      * 登录
      *

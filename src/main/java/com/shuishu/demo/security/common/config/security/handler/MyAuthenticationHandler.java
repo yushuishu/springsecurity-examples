@@ -37,7 +37,7 @@ import org.springframework.stereotype.Component;
  * LogoutSuccessHandler                 ：退出登录成功
  * SessionInformationExpiredStrategy    ：会话过期
  * AccessDeniedHandler                  ：验证权限失败 403 (用来解决认证过的用户访问无权限资源时的异常)
- * AuthenticationEntryPoint             ：认证失败处理 (用来解决匿名用户访问无权限资源时的异常)
+ * AuthenticationEntryPoint             ：匿名用户访问无权限资源时的异常，
  */
 @Slf4j
 @Component

@@ -6,7 +6,6 @@ import com.shuishu.demo.security.enums.UserEnum;
 import com.shuishu.demo.security.service.UserService;
 import jakarta.annotation.Resource;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsPasswordService;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -19,10 +18,10 @@ import org.springframework.stereotype.Service;
  * @IDE ：IntelliJ IDEA
  * @Motto ：ABC(Always Be Coding)
  * <p></p>
- * @Description ：认证/权限信息
+ * @Description ：本地账号 认证/权限信息
  */
 @Service
-public class MyUserDetailsServiceImpl implements UserDetailsService, UserDetailsPasswordService {
+public class LocalUserDetailsServiceImpl implements UserDetailsService {
     @Resource
     private UserService userService;
 
@@ -42,16 +41,4 @@ public class MyUserDetailsServiceImpl implements UserDetailsService, UserDetails
         return userInfoVO;
     }
 
-    /**
-     * 默认使用的 DelegatingPasswordEncoder 默认使用相当最安全加密
-     *
-     * @param user        the user to modify the password for
-     * @param newPassword the password to change to, encoded by the configured
-     *                    {@code PasswordEncoder}
-     * @return
-     */
-    @Override
-    public UserDetails updatePassword(UserDetails user, String newPassword) {
-        return null;
-    }
 }

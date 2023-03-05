@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.shuishu.demo.security.common.config.domain.ApiResponse;
 import com.shuishu.demo.security.common.config.exception.BusinessException;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 
@@ -18,10 +17,10 @@ import java.nio.charset.StandardCharsets;
  * @IDE ：IntelliJ IDEA
  * @Motto ：ABC(Always Be Coding)
  * <p></p>
- * @Description ：响应工具类
+ * @Description ：Response 工具类
  */
 @Component
-public final class ResponseUtils {
+public class ResponseUtils {
     private static ObjectMapper objectMapper;
     public ResponseUtils(ObjectMapper objectMapper){
         ResponseUtils.objectMapper = objectMapper;
@@ -36,7 +35,7 @@ public final class ResponseUtils {
      */
     public static void responseJson(HttpServletResponse response, ApiResponse<?> apiResponse){
         try {
-            response.setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
+            response.setContentType(MediaType.APPLICATION_JSON_VALUE);
             response.setCharacterEncoding(StandardCharsets.UTF_8.name());
             response.getWriter().write(objectMapper.writeValueAsString(apiResponse));
         } catch (IOException e) {

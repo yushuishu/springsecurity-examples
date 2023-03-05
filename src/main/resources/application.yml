@@ -4,7 +4,7 @@ server:
   tomcat:
     uri-encoding: utf-8
   servlet:
-    context-path: /api/fyne/demo
+    context-path: /api/shuishu/demo
 
 
 spring:

@@ -22,11 +22,11 @@ import java.util.UUID;
  * 2、当字段值为TRUE_VALUES表的成员时认为需要开启记住我功能
  */
 @Component
-public class MyRememberMeServices extends PersistentTokenBasedRememberMeServices {
+public class DbRememberMeServices extends PersistentTokenBasedRememberMeServices {
     public static final String REMEMBER_ME_KEY = "rememberMe";
     public static final List<String> TRUE_VALUES = List.of("true", "yes", "on", "1");
 
-    public MyRememberMeServices(UserDetailsService userDetailsService, PersistentTokenRepository tokenRepository) {
+    public DbRememberMeServices(UserDetailsService userDetailsService, PersistentTokenRepository tokenRepository) {
         super(UUID.randomUUID().toString(), userDetailsService, tokenRepository);
     }
 
