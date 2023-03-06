@@ -15,7 +15,7 @@ import static java.lang.String.format;
  * @IDE ：IntelliJ IDEA
  * @Motto ：ABC(Always Be Coding)
  * <p></p>
- * @Description ：
+ * @description ：
  */
 public final class IdGenerate {
     // ==============================Fields===========================================

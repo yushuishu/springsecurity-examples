@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @IDE ：IntelliJ IDEA
  * @Motto ：ABC(Always Be Coding)
  * <p></p>
- * @Description ：
+ * @description ：
  */
 @RestController
 @RequestMapping("role")

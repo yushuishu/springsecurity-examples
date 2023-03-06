@@ -18,7 +18,7 @@ import org.springframework.stereotype.Service;
  * @IDE ：IntelliJ IDEA
  * @Motto ：ABC(Always Be Coding)
  * <p></p>
- * @Description ：本地账号 认证/权限信息
+ * @description ：本地账号 认证/权限信息
  */
 @Service
 public class LocalUserDetailsServiceImpl implements UserDetailsService {

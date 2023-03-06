@@ -15,7 +15,7 @@ import org.springframework.util.StringUtils;
  * @IDE ：IntelliJ IDEA
  * @Motto ：ABC(Always Be Coding)
  * <p></p>
- * @Description ：
+ * @description ：
  */
 @Component
 public class UserAuthDsl extends BaseDsl {

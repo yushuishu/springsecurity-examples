@@ -9,7 +9,7 @@ import jakarta.validation.constraints.Min;
  * @IDE ：IntelliJ IDEA
  * @Motto ：ABC(Always Be Coding)
  * <p></p>
- * @Description ：分页 DTO对象
+ * @description ：分页 DTO对象
  */
 public class PageDTO {
     @Min(value = 1, message = "每页数目从1开始")

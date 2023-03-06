@@ -15,7 +15,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
  * @IDE ：IntelliJ IDEA
  * @Motto ：ABC(Always Be Coding)
  * <p></p>
- * @Description ：Spring Security 工具类
+ * @description ：Spring Security 工具类
  */
 public class SpringSecurityUtil {
     public static final String LOGIN_URL_LOCAL = "/api/shuishu/demo/auth/local";

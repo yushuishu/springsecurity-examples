@@ -23,7 +23,7 @@ import java.util.Date;
  * @IDE ：IntelliJ IDEA
  * @Motto ：ABC(Always Be Coding)
  * <p></p>
- * @Description ：持久化对象(Persistent Object)
+ * @description ：持久化对象(Persistent Object)
  */
 @Setter
 @Getter

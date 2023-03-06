@@ -9,7 +9,7 @@ import org.springframework.beans.BeanUtils;
  * @IDE ：IntelliJ IDEA
  * @Motto ：ABC(Always Be Coding)
  * <p></p>
- * @Description ：数据传输对象(Data Transfer Object)，展示层与服务层之间的数据传输对象
+ * @description ：数据传输对象(Data Transfer Object)，展示层与服务层之间的数据传输对象
  */
 public class BaseDTO<T extends BasePO> {
     /**

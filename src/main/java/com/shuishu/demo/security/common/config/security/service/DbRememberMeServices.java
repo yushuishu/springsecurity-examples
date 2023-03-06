@@ -17,7 +17,7 @@ import java.util.UUID;
  * @IDE ：IntelliJ IDEA
  * @Motto ：ABC(Always Be Coding)
  * <p></p>
- * @Description ：记住我
+ * @description ：记住我
  * 1、从request的Attribute中获取rememberMe字段
  * 2、当字段值为TRUE_VALUES表的成员时认为需要开启记住我功能
  */

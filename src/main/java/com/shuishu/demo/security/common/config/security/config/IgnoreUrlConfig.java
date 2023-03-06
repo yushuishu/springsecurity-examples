@@ -15,7 +15,7 @@ import java.util.Objects;
  * @IDE ：IntelliJ IDEA
  * @Motto ：ABC(Always Be Coding)
  * <p></p>
- * @Description ：SpringSecurity 过滤的 URL
+ * @description ：SpringSecurity 过滤的 URL
  */
 @Configuration
 @PropertySource(value = {"classpath:ignore-url.yml"})

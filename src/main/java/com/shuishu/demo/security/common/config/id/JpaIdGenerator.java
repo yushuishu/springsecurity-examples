@@ -14,7 +14,7 @@ import java.lang.reflect.Field;
  * @IDE ：IntelliJ IDEA
  * @Motto ：ABC(Always Be Coding)
  * <p></p>
- * @Description ：
+ * @description ：
  */
 public class JpaIdGenerator extends IdentityGenerator{
     public Serializable generate(Object object, long workerId) {

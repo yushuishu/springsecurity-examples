@@ -10,7 +10,7 @@ import com.shuishu.demo.security.entity.po.UserAuth;
  * @IDE ：IntelliJ IDEA
  * @Motto ：ABC(Always Be Coding)
  * <p></p>
- * @Description ：
+ * @description ：
  */
 public interface UserAuthRepository extends BaseRepository<UserAuth, Long> {
 }

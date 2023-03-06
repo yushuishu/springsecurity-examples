@@ -26,7 +26,7 @@ import org.springframework.stereotype.Component;
  * @IDE ：IntelliJ IDEA
  * @Motto ：ABC(Always Be Coding)
  * <p>
- * @Description ：Handler
+ * @description ：Handler
  * 设置Content-Type为application/json;charset=UTF-8
  * 根据情况设置状态码
  * 将返回结果写入到response

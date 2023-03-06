@@ -11,7 +11,7 @@ import java.io.Serializable;
  * @IDE ：IntelliJ IDEA
  * @Motto ：ABC(Always Be Coding)
  * <p></p>
- * @Description ：
+ * @description ：
  */
 public class CustomIdGenerator extends JpaIdGenerator{
     @Override

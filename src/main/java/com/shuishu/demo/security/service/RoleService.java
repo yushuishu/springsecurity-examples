@@ -12,7 +12,7 @@ import com.shuishu.demo.security.entity.vo.RoleVO;
  * @IDE ：IntelliJ IDEA
  * @Motto ：ABC(Always Be Coding)
  * <p></p>
- * @Description ：
+ * @description ：
  */
 public interface RoleService {
     /**

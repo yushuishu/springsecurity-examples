@@ -10,7 +10,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @IDE    ：IntelliJ IDEA
  * @Motto  ：ABC(Always Be Coding)
  * <p></p>
- * @Description ：
+ * @description ：
  * {@link <a href="https://docs.spring.io/spring-security/reference/whats-new.html">...</a>}
  *
  * SpringSecurity 实现功能：

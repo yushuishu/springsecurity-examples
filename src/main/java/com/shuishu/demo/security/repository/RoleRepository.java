@@ -12,7 +12,7 @@ import java.util.List;
  * @IDE ：IntelliJ IDEA
  * @Motto ：ABC(Always Be Coding)
  * <p></p>
- * @Description ：
+ * @description ：
  */
 public interface RoleRepository extends BaseRepository<Role, Long> {
     /**

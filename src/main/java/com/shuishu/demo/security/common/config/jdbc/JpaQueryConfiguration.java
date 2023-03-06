@@ -15,7 +15,7 @@ import org.springframework.context.annotation.Configuration;
  * @IDE ：IntelliJ IDEA
  * @Motto ：ABC(Always Be Coding)
  * <p></p>
- * @Description ：
+ * @description ：
  */
 @Configuration
 public class JpaQueryConfiguration {

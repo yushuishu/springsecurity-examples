@@ -25,7 +25,7 @@ import java.util.Map;
  * @IDE ：IntelliJ IDEA
  * @Motto ：ABC(Always Be Coding)
  * <p></p>
- * @Description ：全局异常
+ * @description ：全局异常
  */
 @Slf4j
 @ControllerAdvice

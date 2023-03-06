@@ -2,6 +2,8 @@ package com.shuishu.demo.security.common.config.security.provider;
 
 
 import com.shuishu.demo.security.common.config.security.service.PhoneUserDetailsServiceImpl;
+import com.shuishu.demo.security.common.config.security.token.PhoneAuthenticationToken;
+import com.shuishu.demo.security.entity.vo.UserInfoVO;
 import jakarta.annotation.Resource;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.core.Authentication;
@@ -25,11 +27,12 @@ public class PhoneAuthenticationProvider implements AuthenticationProvider {
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-        return null;
+        UserInfoVO userInfoVO = (UserInfoVO) phoneUserDetailsService.loadUserByUsername(authentication.getPrincipal().toString());
+        return new PhoneAuthenticationToken(userInfoVO, authentication.getCredentials());
     }
 
     @Override
     public boolean supports(Class<?> authentication) {
-        return false;
+        return PhoneAuthenticationToken.class.isAssignableFrom(authentication);
     }
 }

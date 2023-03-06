@@ -17,7 +17,7 @@ import java.nio.charset.StandardCharsets;
  * @IDE ：IntelliJ IDEA
  * @Motto ：ABC(Always Be Coding)
  * <p></p>
- * @Description ：Response 工具类
+ * @description ：Response 工具类
  */
 @Component
 public class ResponseUtils {

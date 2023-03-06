@@ -9,7 +9,7 @@ import com.alibaba.fastjson.JSONObject;
  * @IDE ：IntelliJ IDEA
  * @Motto ：ABC(Always Be Coding)
  * <p></p>
- * @Description ：
+ * @description ：
  */
 public class IdGenerateUtil {
     private IdGenerateUtil() {

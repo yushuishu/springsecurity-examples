@@ -18,7 +18,7 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
  * @IDE ：IntelliJ IDEA
  * @Motto ：ABC(Always Be Coding)
  * <p></p>
- * @Description ：QueryDsl配置
+ * @description ：QueryDsl配置
  */
 @Configuration
 public class SqlQueryConfiguration {

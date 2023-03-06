@@ -10,7 +10,7 @@ import com.shuishu.demo.security.entity.po.User;
  * @IDE ：IntelliJ IDEA
  * @Motto ：ABC(Always Be Coding)
  * <p></p>
- * @Description ：
+ * @description ：
  */
 public interface UserRepository extends BaseRepository<User, Long> {
 }

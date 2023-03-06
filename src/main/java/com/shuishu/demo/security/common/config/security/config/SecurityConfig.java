@@ -30,7 +30,7 @@ import javax.sql.DataSource;
  * @IDE ：IntelliJ IDEA
  * @Motto ：ABC(Always Be Coding)
  * <p></p>
- * @Description ：SpringSecurity 配置
+ * @description ：SpringSecurity 配置
  */
 
 @Configuration

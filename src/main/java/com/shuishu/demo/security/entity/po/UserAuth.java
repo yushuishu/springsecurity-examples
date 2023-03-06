@@ -22,7 +22,7 @@ import java.util.Date;
  * @IDE ：IntelliJ IDEA
  * @Motto ：ABC(Always Be Coding)
  * <p></p>
- * @Description ：用户授权信息表
+ * @description ：用户授权信息表
  */
 @Setter
 @Getter

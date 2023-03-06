@@ -16,7 +16,7 @@ import java.util.List;
  * @IDE ：IntelliJ IDEA
  * @Motto ：ABC(Always Be Coding)
  * <p></p>
- * @Description ：
+ * @description ：
  */
 public class PageVO<T> implements Serializable {
     private List<T> dataList = new ArrayList<>();

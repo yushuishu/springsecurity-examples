@@ -27,7 +27,7 @@ import java.io.IOException;
  * @IDE ：IntelliJ IDEA
  * @Motto ：ABC(Always Be Coding)
  * <p></p>
- * @Description ：本地账号登录过滤器
+ * @description ：本地账号登录过滤器
  * 1、继承了 AbstractAuthenticationProcessingFilter，实现类中的抽象方法 attemptAuthentication()
  * 2、重写构造方法，因为security中的 AbstractAuthenticationProcessingFilter类没有无参构造方法
  *    所以子类需要通过 super()方法显式的调用父类构造方法。

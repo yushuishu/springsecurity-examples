@@ -9,7 +9,7 @@ import java.io.Serializable;
  * @IDE ：IntelliJ IDEA
  * @Motto ：ABC(Always Be Coding)
  * <p></p>
- * @Description ：视图对象(View Object), 展示层
+ * @description ：视图对象(View Object), 展示层
  */
 public class BaseVO<T extends BasePO> implements Serializable {
 }

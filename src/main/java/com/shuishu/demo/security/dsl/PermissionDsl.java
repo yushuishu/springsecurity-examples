@@ -17,7 +17,7 @@ import java.util.List;
  * @IDE ：IntelliJ IDEA
  * @Motto ：ABC(Always Be Coding)
  * <p></p>
- * @Description ：
+ * @description ：
  */
 @Component
 public class PermissionDsl extends BaseDsl {

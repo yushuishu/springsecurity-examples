@@ -16,7 +16,7 @@ import com.shuishu.demo.security.enums.UserEnum;
  * @IDE ：IntelliJ IDEA
  * @Motto ：ABC(Always Be Coding)
  * <p></p>
- * @Description ：
+ * @description ：
  */
 public interface UserService {
     /**

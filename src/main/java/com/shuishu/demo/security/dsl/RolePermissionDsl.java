@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
  * @IDE ：IntelliJ IDEA
  * @Motto ：ABC(Always Be Coding)
  * <p></p>
- * @Description ：
+ * @description ：
  */
 @Component
 public class RolePermissionDsl extends BaseDsl {
