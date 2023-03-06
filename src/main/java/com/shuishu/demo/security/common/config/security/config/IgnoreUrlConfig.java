@@ -3,7 +3,6 @@ package com.shuishu.demo.security.common.config.security.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.util.AntPathMatcher;
 
 import java.util.List;
@@ -18,11 +17,9 @@ import java.util.Objects;
  * @description ：SpringSecurity 过滤的 URL
  */
 @Configuration
-@PropertySource(value = {"classpath:ignore-url.yml"})
 @ConfigurationProperties(prefix = "ignore")
 public class IgnoreUrlConfig {
     private List<String> urls;
-
 
     public boolean existsInIgnoreUrlList(String requestUrl) {
         if (Objects.isNull(urls) || urls.isEmpty()) {

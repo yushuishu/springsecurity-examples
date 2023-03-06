@@ -24,8 +24,8 @@ public class PhoneAuthenticationToken extends UsernamePasswordAuthenticationToke
         super(principal, credentials);
     }
 
-    public PhoneAuthenticationToken(Object principal, Object credentials, Collection<? extends GrantedAuthority> authorities) {
-        super(principal, credentials, authorities);
+    public PhoneAuthenticationToken(Object principal, Collection<? extends GrantedAuthority> authorities) {
+        super(principal, "", authorities);
     }
 
 }

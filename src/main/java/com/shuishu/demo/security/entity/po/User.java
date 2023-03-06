@@ -36,7 +36,7 @@ public class User extends BasePO {
 
     @Id
     @GeneratedValue(generator = "CustomIdGenerator")
-    @GenericGenerator(name = "CustomIdGenerator", strategy = "com.shuishu.demo.springsecurity.common.config.id.CustomIdGenerator")
+    @GenericGenerator(name = "CustomIdGenerator", strategy = "com.shuishu.demo.security.common.config.id.CustomIdGenerator")
     @Comment(value = "用户id")
     private Long userId;
     @Comment("昵称")

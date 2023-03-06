@@ -33,7 +33,7 @@ public class Permission extends BasePO {
 
     @Id
     @GeneratedValue(generator = "CustomIdGenerator")
-    @GenericGenerator(name = "CustomIdGenerator", strategy = "com.shuishu.demo.springsecurity.common.config.id.CustomIdGenerator")
+    @GenericGenerator(name = "CustomIdGenerator", strategy = "com.shuishu.demo.security.common.config.id.CustomIdGenerator")
     @Comment("权限id")
     private Long permissionId;
 

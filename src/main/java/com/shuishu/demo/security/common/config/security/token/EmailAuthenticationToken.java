@@ -25,8 +25,8 @@ public class EmailAuthenticationToken extends UsernamePasswordAuthenticationToke
         super(principal, credentials);
     }
 
-    public EmailAuthenticationToken(Object principal, Object credentials, Collection<? extends GrantedAuthority> authorities) {
-        super(principal, credentials, authorities);
+    public EmailAuthenticationToken(Object principal, Collection<? extends GrantedAuthority> authorities) {
+        super(principal, "", authorities);
     }
 
 }

@@ -1,12 +1,17 @@
 package com.shuishu.demo.security.common.config.security.provider;
 
 
-import com.shuishu.demo.security.common.config.security.config.PasswordEncoderConfig;
 import com.shuishu.demo.security.common.config.security.service.LocalUserDetailsServiceImpl;
+import com.shuishu.demo.security.common.config.security.token.LocalAuthenticationToken;
+import com.shuishu.demo.security.entity.vo.UserInfoVO;
 import jakarta.annotation.Resource;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Component;
 
 /**
  * @author ：谁书-ss
@@ -17,26 +22,38 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
  * @description ：
  * <p></p>
  */
-@Configuration
-public class LocalDaoAuthenticationProvider {
+@Slf4j
+@Component
+public class LocalDaoAuthenticationProvider implements AuthenticationProvider {
     @Resource
     private LocalUserDetailsServiceImpl localUserDetailsService;
     @Resource
-    private PasswordEncoderConfig passwordEncoderConfig;
+    private PasswordEncoder passwordEncoder;
 
-    /**
-     * 默认AuthenticationProvider，如果创建了自定义AuthenticationProvider，则默认的就不会被注入到 AuthenticationManager
-     * 所以如果还想保留默认的，需要手动创建 Bean，并在 AuthenticationManager中注入
-     *
-     * @return DaoAuthenticationProvider
-     */
-    @Bean
-    public DaoAuthenticationProvider daoAuthenticationProvider() {
-        final DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-        provider.setPasswordEncoder(passwordEncoderConfig.passwordEncoder());
-        provider.setUserDetailsService(localUserDetailsService);
-        provider.setHideUserNotFoundExceptions(false);
-        return provider;
+    @Override
+    public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+        // 获取 账号、密码
+        String userAuthIdentifier = (String) authentication.getPrincipal();
+        String userAuthCredential = (String) authentication.getCredentials();
+        log.info("【LocalDaoAuthenticationProvider 认证】执行authenticate()方法，获取账号：" + userAuthIdentifier);
+        log.info("【LocalDaoAuthenticationProvider 认证】执行authenticate()方法，获取密码：" + userAuthCredential);
+
+        // 获取账号用户信息
+        UserInfoVO userInfoVO = (UserInfoVO) localUserDetailsService.loadUserByUsername(userAuthIdentifier);
+        log.info("【LocalDaoAuthenticationProvider 认证】执行authenticate()方法，查询用户：" + userInfoVO);
+
+        // 校验密码正确性
+        if (!passwordEncoder.matches(userAuthCredential, userInfoVO.getUserAuthCredential())){
+            log.info("【LocalDaoAuthenticationProvider 认证】执行authenticate()方法，账号：{} 密码错误", userAuthIdentifier);
+            throw new BadCredentialsException("用户名或密码不正确");
+        }
+
+        return new LocalAuthenticationToken(userInfoVO, userAuthCredential, userInfoVO.getAuthorities());
+    }
+
+    @Override
+    public boolean supports(Class<?> authentication) {
+        return LocalAuthenticationToken.class.isAssignableFrom(authentication);
     }
 
 }

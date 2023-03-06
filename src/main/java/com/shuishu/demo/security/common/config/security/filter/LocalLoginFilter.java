@@ -2,24 +2,18 @@ package com.shuishu.demo.security.common.config.security.filter;
 
 
 import com.shuishu.demo.security.common.config.security.handler.MyAuthenticationHandler;
-import com.shuishu.demo.security.common.config.security.service.DbRememberMeServices;
 import com.shuishu.demo.security.common.config.security.token.LocalAuthenticationToken;
 import com.shuishu.demo.security.common.config.security.utils.SpringSecurityUtil;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import java.io.IOException;
 
 /**
  * @author ：谁书-ss
@@ -44,21 +38,16 @@ import java.io.IOException;
  *     ”记住我“功能参数       ： 把用户提供的rememberMe字段放到request的Attribute中，供后续 MyRememberMeService获取
  *     调用认证管理器的 authenticate()方法
  */
-@Component
 public class LocalLoginFilter extends AbstractAuthenticationProcessingFilter {
 
-
-    protected LocalLoginFilter(AuthenticationManager authenticationManager,
-                               MyAuthenticationHandler myAuthenticationHandler,
-                               DbRememberMeServices dbRememberMeServices) {
+    public LocalLoginFilter(AuthenticationManager authenticationManager,
+                               MyAuthenticationHandler myAuthenticationHandler) {
         // 登录路径，方式、认证管理器
         super(new AntPathRequestMatcher(SpringSecurityUtil.LOGIN_URL_LOCAL, RequestMethod.POST.name()), authenticationManager);
         // 认证成功
         setAuthenticationSuccessHandler(myAuthenticationHandler);
         // 认证失败
         setAuthenticationFailureHandler(myAuthenticationHandler);
-        // 记住我
-        setRememberMeServices(dbRememberMeServices);
     }
 
     @Override

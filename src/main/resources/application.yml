@@ -6,7 +6,6 @@ server:
   servlet:
     context-path: /api/shuishu/demo
 
-
 spring:
   main:
     allow-bean-definition-overriding: true

@@ -21,14 +21,14 @@ import java.util.UUID;
  * 1、从request的Attribute中获取rememberMe字段
  * 2、当字段值为TRUE_VALUES表的成员时认为需要开启记住我功能
  */
-@Component
-public class DbRememberMeServices extends PersistentTokenBasedRememberMeServices {
+//@Component
+public class DbRememberMeServices {
     public static final String REMEMBER_ME_KEY = "rememberMe";
     public static final List<String> TRUE_VALUES = List.of("true", "yes", "on", "1");
 
-    public DbRememberMeServices(UserDetailsService userDetailsService, PersistentTokenRepository tokenRepository) {
-        super(UUID.randomUUID().toString(), userDetailsService, tokenRepository);
-    }
+    //public DbRememberMeServices(UserDetailsService userDetailsService, PersistentTokenRepository tokenRepository) {
+    //    super(UUID.randomUUID().toString(), userDetailsService, tokenRepository);
+    //}
 
 
     /**
@@ -39,16 +39,16 @@ public class DbRememberMeServices extends PersistentTokenBasedRememberMeServices
      * @param parameter the configured remember-me parameter name.
      * @return -
      */
-    @Override
-    protected boolean rememberMeRequested(HttpServletRequest request, String parameter) {
-        final String rememberMe = (String) request.getAttribute(REMEMBER_ME_KEY);
-        if (rememberMe != null) {
-            for (String trueValue : TRUE_VALUES) {
-                if (trueValue.equalsIgnoreCase(rememberMe)) {
-                    return true;
-                }
-            }
-        }
-        return super.rememberMeRequested(request, parameter);
-    }
+    //@Override
+    //protected boolean rememberMeRequested(HttpServletRequest request, String parameter) {
+    //    final String rememberMe = (String) request.getAttribute(REMEMBER_ME_KEY);
+    //    if (rememberMe != null) {
+    //        for (String trueValue : TRUE_VALUES) {
+    //            if (trueValue.equalsIgnoreCase(rememberMe)) {
+    //                return true;
+    //            }
+    //        }
+    //    }
+    //    return super.rememberMeRequested(request, parameter);
+    //}
 }
