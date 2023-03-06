@@ -1,12 +1,15 @@
 package com.shuishu.demo.security.common.config.security.config;
 
 
+import com.shuishu.demo.security.common.config.security.filter.EmailLoginFilter;
 import com.shuishu.demo.security.common.config.security.filter.LocalLoginFilter;
+import com.shuishu.demo.security.common.config.security.filter.PhoneLoginFilter;
 import com.shuishu.demo.security.common.config.security.handler.MyAuthenticationHandler;
 import com.shuishu.demo.security.common.config.security.provider.EmailAuthenticationProvider;
 import com.shuishu.demo.security.common.config.security.provider.LocalDaoAuthenticationProvider;
 import com.shuishu.demo.security.common.config.security.provider.PhoneAuthenticationProvider;
 import com.shuishu.demo.security.common.config.security.service.DbRememberMeServices;
+import com.shuishu.demo.security.common.config.security.utils.SpringSecurityUtil;
 import jakarta.annotation.Resource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -41,6 +44,14 @@ public class SecurityConfig {
     private PhoneAuthenticationProvider phoneAuthenticationProvider;
     @Resource
     private LocalDaoAuthenticationProvider localDaoAuthenticationProvider;
+    @Resource
+    private LocalLoginFilter localLoginFilter;
+    @Resource
+    private EmailLoginFilter emailLoginFilter;
+    @Resource
+    private PhoneLoginFilter phoneLoginFilter;
+    @Resource
+    private DbRememberMeServices dbRememberMeServices;
     @Resource
     private IgnoreUrlConfig ignoreUrlConfig;
 
@@ -79,29 +90,23 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity,
-                                                   LocalLoginFilter localLoginFilter,
-                                                   MyAuthenticationHandler myAuthenticationHandler,
-                                                   DbRememberMeServices dbRememberMeServices) throws Exception{
+                                                   MyAuthenticationHandler myAuthenticationHandler) throws Exception{
         // 路径配置 （authorizeRequests 方法已废弃，取而代之的是 authorizeHttpRequests）
         // http.antMatcher()不再可用，并被替换为 http.securityMatcher() 或 httpSecurity.requestMatchers()
         httpSecurity.authorizeHttpRequests()
                 .requestMatchers(ignoreUrlConfig.getUrls().toArray(new String[0])).permitAll()
                 .anyRequest().authenticated();
 
-        httpSecurity.formLogin()
-                .usernameParameter("userAuthIdentifier")
-                .passwordParameter("userAuthCredential")
-                .loginProcessingUrl("/api/fyne/demo/auth/local")
-                .successHandler(myAuthenticationHandler)
-                .failureHandler(myAuthenticationHandler)
-                .and()
+        httpSecurity.formLogin().disable()
+                .addFilterBefore(localLoginFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(emailLoginFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(phoneLoginFilter, UsernamePasswordAuthenticationFilter.class)
                 .logout()
-                .logoutUrl("/api/fyne/demo/auth/logout")
+                .logoutUrl(SpringSecurityUtil.LOGOUT_URL)
                 .logoutSuccessHandler(myAuthenticationHandler)
                 .and()
                 .rememberMe().rememberMeServices(dbRememberMeServices)
                 .and()
-                .addFilterAt(localLoginFilter, UsernamePasswordAuthenticationFilter.class)
                 .csrf()
                 .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
                 .csrfTokenRequestHandler(new CsrfTokenRequestAttributeHandler())

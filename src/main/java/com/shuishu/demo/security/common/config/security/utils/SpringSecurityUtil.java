@@ -18,6 +18,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
  * @description ：Spring Security 工具类
  */
 public class SpringSecurityUtil {
+    public static final String LOGOUT_URL = "/api/shuishu/demo/auth/logout";
     public static final String LOGIN_URL_LOCAL = "/api/shuishu/demo/auth/local";
     public static final String LOGIN_URL_PHONE = "/api/shuishu/demo/auth/phone";
     public static final String LOGIN_URL_EMAIL = "/api/shuishu/demo/auth/email";
