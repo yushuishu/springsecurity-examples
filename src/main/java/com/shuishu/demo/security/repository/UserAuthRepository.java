@@ -13,4 +13,12 @@ import com.shuishu.demo.security.entity.po.UserAuth;
  * @description ：
  */
 public interface UserAuthRepository extends BaseRepository<UserAuth, Long> {
+    /**
+     * 查询账号信息
+     *
+     * @param userAuthIdentifier 账号
+     * @param userAuthType 类型
+     * @return -
+     */
+    UserAuth findByUserAuthIdentifierAndAndUserAuthType(String userAuthIdentifier, String userAuthType);
 }

@@ -16,8 +16,6 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
-import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
-import org.springframework.security.web.csrf.CsrfTokenRequestAttributeHandler;
 
 import javax.sql.DataSource;
 
@@ -36,8 +34,6 @@ public class SecurityConfig {
     //private DbRememberMeServices dbRememberMeServices;
     @Resource
     private MyAuthenticationHandler myAuthenticationHandler;
-    @Resource
-    private IgnoreUrlConfig ignoreUrlConfig;
 
 
     /**
@@ -62,7 +58,7 @@ public class SecurityConfig {
         // 路径配置 （authorizeRequests 方法已废弃，取而代之的是 authorizeHttpRequests）
         // http.antMatcher()不再可用，并被替换为 http.securityMatcher() 或 httpSecurity.requestMatchers()
         httpSecurity.authorizeHttpRequests()
-                .requestMatchers(ignoreUrlConfig.getUrls().toArray(new String[0])).permitAll()
+                .requestMatchers(ignoreUrlArray()).permitAll()
                 .anyRequest().authenticated();
 
         httpSecurity.formLogin().disable()
@@ -88,4 +84,12 @@ public class SecurityConfig {
         return httpSecurity.build();
     }
 
+    private static String[] ignoreUrlArray(){
+        return new String[]{
+                "/api/shuishu/demo/doc.html",
+                "/api/shuishu/demo/webjars/**",
+                "/api/shuishu/demo/v3/api-docs/**",
+                "/auth/**"
+        };
+    }
 }

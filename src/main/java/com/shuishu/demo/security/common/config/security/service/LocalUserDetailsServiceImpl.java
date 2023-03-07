@@ -5,6 +5,7 @@ import com.shuishu.demo.security.entity.vo.UserInfoVO;
 import com.shuishu.demo.security.enums.UserEnum;
 import com.shuishu.demo.security.service.UserService;
 import jakarta.annotation.Resource;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -20,6 +21,7 @@ import org.springframework.stereotype.Service;
  * <p></p>
  * @description ：本地账号 认证/权限信息
  */
+@Slf4j
 @Service
 public class LocalUserDetailsServiceImpl implements UserDetailsService {
     @Resource
@@ -34,6 +36,7 @@ public class LocalUserDetailsServiceImpl implements UserDetailsService {
      */
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        log.info("【LocalUserDetailsServiceImpl 认证】执行loadUserByUsername() 方法，获取账号：" + username);
         UserInfoVO userInfoVO = userService.findByUserAuthIdentifier(username, UserEnum.AuthType.LOCAL.getType());
         if (userInfoVO == null) {
             throw new UsernameNotFoundException("用户不存在");

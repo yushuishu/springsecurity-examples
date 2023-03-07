@@ -31,11 +31,11 @@ public class AuthServiceImpl implements AuthService {
     public UserInfoVO login(String name, String pwd, UserEnum.AuthType authType) {
         Authentication authentication = null;
         if (UserEnum.AuthType.LOCAL.equals(authType)){
-            authenticationManager.authenticate(new LocalAuthenticationToken(name, pwd));
+            authentication = authenticationManager.authenticate(new LocalAuthenticationToken(name, pwd));
         }else if (UserEnum.AuthType.EMAIL.equals(authType)){
-            authenticationManager.authenticate(new EmailAuthenticationToken(name, pwd));
+            authentication = authenticationManager.authenticate(new EmailAuthenticationToken(name, pwd));
         }else if (UserEnum.AuthType.PHONE.equals(authType)){
-            authenticationManager.authenticate(new PhoneAuthenticationToken(name, pwd));
+            authentication = authenticationManager.authenticate(new PhoneAuthenticationToken(name, pwd));
         }else {
             throw new BusinessException("不支持的登录方式");
         }

@@ -37,8 +37,5 @@ public class RoleInfoVO extends BaseVO<Role> {
      * 角色code
      */
     private String roleCode;
-    /**
-     * 权限集合
-     */
-    private List<PermissionInfoVO> permissionInfoList;
+
 }

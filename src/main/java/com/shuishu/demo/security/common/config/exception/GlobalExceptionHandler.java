@@ -4,6 +4,8 @@ package com.shuishu.demo.security.common.config.exception;
 import com.shuishu.demo.security.common.config.domain.ApiResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -86,6 +88,20 @@ public class GlobalExceptionHandler {
     ApiResponse<String> handleBindException(BindException e) {
         printParameterMap();
         return ApiResponse.of(ApiResponse.Type.ERROR.value(), errorMessage(e.getBindingResult()));
+    }
+
+    @ResponseBody
+    @ExceptionHandler(UsernameNotFoundException.class)
+    ApiResponse<String> handleBindException(UsernameNotFoundException e) {
+        printParameterMap();
+        return ApiResponse.of(ApiResponse.Type.UN_AUTH.value(), e.getMessage());
+    }
+
+    @ResponseBody
+    @ExceptionHandler(BadCredentialsException.class)
+    ApiResponse<String> handleBindException(BadCredentialsException e) {
+        printParameterMap();
+        return ApiResponse.of(ApiResponse.Type.UN_AUTH.value(), e.getMessage());
     }
 
     public static Map<String, String> convertRequestParamMap(Map<String, String[]> paramMap) {

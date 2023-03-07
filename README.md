@@ -47,7 +47,7 @@ Redis：
     - 普通用户（general-role）
         - 分页查询：/api/shuishu/demo/test/page
         - 详情：/api/shuishu/demo/test/details
-- 小红
+- 小蓝
     - 普通用户（general-role）
         - 分页查询：/api/shuishu/demo/test/page
         - 详情：/api/shuishu/demo/test/details

@@ -6,6 +6,7 @@ import com.shuishu.demo.security.common.config.security.token.LocalAuthenticatio
 import com.shuishu.demo.security.common.config.security.utils.SpringSecurityUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
@@ -37,11 +38,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
  *     ”记住我“功能参数       ： 把用户提供的rememberMe字段放到request的Attribute中，供后续 MyRememberMeService获取
  *     调用认证管理器的 authenticate()方法
  */
+@Slf4j
 public class LocalLoginFilter extends AbstractAuthenticationProcessingFilter {
-
     public LocalLoginFilter(MyAuthenticationHandler myAuthenticationHandler) {
         // 登录路径，方式、认证管理器
         super(new AntPathRequestMatcher(SpringSecurityUtil.LOGIN_URL_LOCAL, RequestMethod.POST.name()));
+        log.info("【LocalLoginFilter 过滤器】执行LocalLoginFilter()方法");
         // 认证成功
         setAuthenticationSuccessHandler(myAuthenticationHandler);
         // 认证失败
@@ -50,6 +52,7 @@ public class LocalLoginFilter extends AbstractAuthenticationProcessingFilter {
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
+        log.info("【LocalLoginFilter 过滤器】执行attemptAuthentication()方法");
         String userAuthIdentifier = request.getParameter(SpringSecurityUtil.LOGIN_USERNAME_KEY);
         userAuthIdentifier = StringUtils.hasText(userAuthIdentifier) ? userAuthIdentifier.trim() : "";
         String userAuthCredential = request.getParameter(SpringSecurityUtil.LOGIN_PASSWORD_KEY);

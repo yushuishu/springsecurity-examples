@@ -13,4 +13,11 @@ import com.shuishu.demo.security.entity.po.User;
  * @description ：
  */
 public interface UserRepository extends BaseRepository<User, Long> {
+    /**
+     * 用户信息
+     *
+     * @param userId 用户id
+     * @return 用户信息
+     */
+    User findByUserId(Long userId);
 }

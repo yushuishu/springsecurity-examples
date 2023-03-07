@@ -1,8 +1,0 @@
-ignore:
-  urls:
-#    swagger
-    - /api/shuishu/demo/doc.html
-    - /api/shuishu/demo/webjars/**
-    - /api/shuishu/demo/v3/api-docs/**
-#    登录
-    - /auth/**

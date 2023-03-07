@@ -17,7 +17,7 @@ spring:
   datasource:
     url: jdbc:postgresql://127.0.0.1:5432/spring_security_examples?useUnicode=true&characterEncoding=utf8
     username: postgres
-    password: 123
+    password: 123456
     driver-class-name: org.postgresql.Driver
     type: com.zaxxer.hikari.HikariDataSource
     hikari:

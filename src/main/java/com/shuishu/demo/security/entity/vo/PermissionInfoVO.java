@@ -43,4 +43,12 @@ public class PermissionInfoVO extends BaseVO<Permission> {
      * 父级权限id（权限分类）
      */
     private Long permissionParentId;
+    /**
+     * 角色权限关联id
+     */
+    private Long rolePermissionId;
+    /**
+     * 角色id
+     */
+    private Long roleId;
 }

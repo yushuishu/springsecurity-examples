@@ -1,6 +1,7 @@
 package com.shuishu.demo.security.common.config.security.provider;
 
 
+import com.shuishu.demo.security.common.config.exception.BusinessException;
 import com.shuishu.demo.security.common.config.security.service.LocalUserDetailsServiceImpl;
 import com.shuishu.demo.security.common.config.security.token.LocalAuthenticationToken;
 import com.shuishu.demo.security.entity.vo.UserInfoVO;

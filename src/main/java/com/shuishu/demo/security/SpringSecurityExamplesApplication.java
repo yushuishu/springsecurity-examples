@@ -1,13 +1,7 @@
 package com.shuishu.demo.security;
 
-import org.springframework.beans.factory.config.YamlPropertiesFactoryBean;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
-import org.springframework.core.io.ClassPathResource;
-
-import java.util.Objects;
 
 
 /**
@@ -40,15 +34,6 @@ public class SpringSecurityExamplesApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(SpringSecurityExamplesApplication.class, args);
-    }
-
-    @Bean
-    public PropertySourcesPlaceholderConfigurer yaml() {
-        PropertySourcesPlaceholderConfigurer configurer = new PropertySourcesPlaceholderConfigurer();
-        YamlPropertiesFactoryBean yaml = new YamlPropertiesFactoryBean();
-        yaml.setResources(new ClassPathResource("ignore-url.yml"));
-        configurer.setProperties(Objects.requireNonNull(yaml.getObject()));
-        return configurer;
     }
 
 }
