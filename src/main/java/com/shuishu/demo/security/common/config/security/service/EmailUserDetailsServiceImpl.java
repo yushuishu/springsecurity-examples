@@ -26,7 +26,7 @@ public class EmailUserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UserInfoVO userInfoVO = userService.findByUserAuthIdentifier(username, UserEnum.AuthType.EMAIL);
+        UserInfoVO userInfoVO = userService.findByUserAuthIdentifier(username, UserEnum.AuthType.EMAIL.getType());
         if (userInfoVO == null) {
             throw new UsernameNotFoundException("用户不存在");
         }

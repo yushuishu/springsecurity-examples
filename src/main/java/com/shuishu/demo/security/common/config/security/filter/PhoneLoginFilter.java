@@ -7,7 +7,6 @@ import com.shuishu.demo.security.common.config.security.utils.SpringSecurityUtil
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
@@ -28,10 +27,9 @@ import java.io.IOException;
  * <p></p>
  */
 public class PhoneLoginFilter extends AbstractAuthenticationProcessingFilter {
-    public PhoneLoginFilter(AuthenticationManager authenticationManager,
-                               MyAuthenticationHandler myAuthenticationHandler) {
+    public PhoneLoginFilter(MyAuthenticationHandler myAuthenticationHandler) {
         // 登录路径，方式、认证管理器
-        super(new AntPathRequestMatcher(SpringSecurityUtil.LOGIN_URL_PHONE, RequestMethod.POST.name()), authenticationManager);
+        super(new AntPathRequestMatcher(SpringSecurityUtil.LOGIN_URL_PHONE, RequestMethod.POST.name()));
         // 认证成功
         setAuthenticationSuccessHandler(myAuthenticationHandler);
         // 认证失败

@@ -17,7 +17,7 @@ spring:
   datasource:
     url: jdbc:postgresql://127.0.0.1:5432/spring_security_examples?useUnicode=true&characterEncoding=utf8
     username: postgres
-    password: 123456
+    password: 123
     driver-class-name: org.postgresql.Driver
     type: com.zaxxer.hikari.HikariDataSource
     hikari:
@@ -38,4 +38,23 @@ spring:
         temp:
           use_jdbc_metadata_defaults: true
     show-sql: true
+  data:
+    #  redis
+    redis:
+      host: 127.0.0.1
+      password: 123
+      port: 6379
+  # 邮件发送配置
+  mail:
+    default-encoding: utf-8
+    host: smtp.qq.com
+    username: 2124929779@qq.com
+    password: ndajrzokmunwbehd
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
 

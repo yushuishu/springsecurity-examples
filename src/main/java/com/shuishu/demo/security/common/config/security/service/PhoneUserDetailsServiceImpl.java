@@ -26,7 +26,7 @@ public class PhoneUserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UserInfoVO userInfoVO = userService.findByUserAuthIdentifier(username, UserEnum.AuthType.PHONE);
+        UserInfoVO userInfoVO = userService.findByUserAuthIdentifier(username, UserEnum.AuthType.PHONE.getType());
         if (userInfoVO == null) {
             throw new UsernameNotFoundException("用户不存在");
         }

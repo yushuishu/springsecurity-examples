@@ -6,7 +6,6 @@ import com.shuishu.demo.security.common.config.security.token.LocalAuthenticatio
 import com.shuishu.demo.security.common.config.security.utils.SpringSecurityUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
@@ -40,10 +39,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
  */
 public class LocalLoginFilter extends AbstractAuthenticationProcessingFilter {
 
-    public LocalLoginFilter(AuthenticationManager authenticationManager,
-                               MyAuthenticationHandler myAuthenticationHandler) {
+    public LocalLoginFilter(MyAuthenticationHandler myAuthenticationHandler) {
         // 登录路径，方式、认证管理器
-        super(new AntPathRequestMatcher(SpringSecurityUtil.LOGIN_URL_LOCAL, RequestMethod.POST.name()), authenticationManager);
+        super(new AntPathRequestMatcher(SpringSecurityUtil.LOGIN_URL_LOCAL, RequestMethod.POST.name()));
         // 认证成功
         setAuthenticationSuccessHandler(myAuthenticationHandler);
         // 认证失败

@@ -1,9 +1,16 @@
 package com.shuishu.demo.security.common.config.security.utils;
 
 
+import com.shuishu.demo.security.common.config.exception.BusinessException;
+import com.shuishu.demo.security.common.config.security.token.EmailAuthenticationToken;
+import com.shuishu.demo.security.common.config.security.token.LocalAuthenticationToken;
+import com.shuishu.demo.security.common.config.security.token.PhoneAuthenticationToken;
+import com.shuishu.demo.security.enums.UserEnum;
+import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -34,10 +41,19 @@ public class SpringSecurityUtil {
      * @param username    用户名
      * @param password    密码
      */
-    public static void login(String username, String password) {
+    public static void login(String username, String password, UserEnum.AuthType authType) {
         HttpServletRequest request = ((ServletRequestAttributes) (RequestContextHolder.currentRequestAttributes())).getRequest();
-        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(username, password);
-        SecurityContextHolder.getContext().setAuthentication(token);
+        Authentication authentication = null;
+        if (UserEnum.AuthType.LOCAL.equals(authType)){
+
+            SecurityContextHolder.getContext().setAuthentication(new LocalAuthenticationToken(username, password));
+        }else if (UserEnum.AuthType.EMAIL.equals(authType)){
+            SecurityContextHolder.getContext().setAuthentication(new EmailAuthenticationToken(username, password));
+        }else if (UserEnum.AuthType.PHONE.equals(authType)){
+            SecurityContextHolder.getContext().setAuthentication(new PhoneAuthenticationToken(username, password));
+        }else {
+            throw new BusinessException("不支持的登录方式");
+        }
         request.getSession().setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, SecurityContextHolder.getContext());
     }
 

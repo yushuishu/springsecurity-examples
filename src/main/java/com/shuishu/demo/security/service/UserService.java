@@ -2,7 +2,6 @@ package com.shuishu.demo.security.service;
 
 
 import com.shuishu.demo.security.entity.vo.UserInfoVO;
-import com.shuishu.demo.security.enums.UserEnum;
 
 /**
  * @author ：谁书-ss
@@ -20,6 +19,6 @@ public interface UserService {
      * @param authType 账号类型
      * @return 用户信息
      */
-    UserInfoVO findByUserAuthIdentifier(String userAuthIdentifier, UserEnum.AuthType authType);
+    UserInfoVO findByUserAuthIdentifier(String userAuthIdentifier, String authType);
 
 }

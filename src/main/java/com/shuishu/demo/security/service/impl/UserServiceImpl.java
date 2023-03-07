@@ -33,8 +33,8 @@ public class UserServiceImpl implements UserService {
     private RoleDsl roleDsl;
 
     @Override
-    public UserInfoVO findByUserAuthIdentifier(String userAuthIdentifier, UserEnum.AuthType authType) {
-        UserInfoVO userInfoVO = userAuthDsl.findByUserAuthIdentifier(userAuthIdentifier, authType.getType());
+    public UserInfoVO findByUserAuthIdentifier(String userAuthIdentifier, String authType) {
+        UserInfoVO userInfoVO = userAuthDsl.findByUserAuthIdentifier(userAuthIdentifier, authType);
         if (userInfoVO == null){
             return null;
         }

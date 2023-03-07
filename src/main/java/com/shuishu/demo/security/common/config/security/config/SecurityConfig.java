@@ -9,8 +9,8 @@ import com.shuishu.demo.security.common.config.security.utils.SpringSecurityUtil
 import jakarta.annotation.Resource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -30,13 +30,12 @@ import javax.sql.DataSource;
  * @description ：SpringSecurity 配置
  */
 @Configuration
+@EnableWebSecurity
 public class SecurityConfig {
     //@Resource
     //private DbRememberMeServices dbRememberMeServices;
     @Resource
     private MyAuthenticationHandler myAuthenticationHandler;
-    @Resource
-    private AuthenticationManager authenticationManager;
     @Resource
     private IgnoreUrlConfig ignoreUrlConfig;
 
@@ -67,9 +66,9 @@ public class SecurityConfig {
                 .anyRequest().authenticated();
 
         httpSecurity.formLogin().disable()
-                .addFilterBefore(new LocalLoginFilter(authenticationManager, myAuthenticationHandler), UsernamePasswordAuthenticationFilter.class)
-                .addFilterBefore(new EmailLoginFilter(authenticationManager, myAuthenticationHandler), UsernamePasswordAuthenticationFilter.class)
-                .addFilterBefore(new PhoneLoginFilter(authenticationManager, myAuthenticationHandler), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new LocalLoginFilter(myAuthenticationHandler), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new EmailLoginFilter(myAuthenticationHandler), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new PhoneLoginFilter(myAuthenticationHandler), UsernamePasswordAuthenticationFilter.class)
                 .logout()
                 .logoutUrl(SpringSecurityUtil.LOGOUT_URL)
                 .logoutSuccessHandler(myAuthenticationHandler)

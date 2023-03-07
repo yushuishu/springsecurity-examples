@@ -5,4 +5,4 @@ ignore:
     - /api/shuishu/demo/webjars/**
     - /api/shuishu/demo/v3/api-docs/**
 #    登录
-    - /api/shuishu/demo/auth/**
+    - /auth/**

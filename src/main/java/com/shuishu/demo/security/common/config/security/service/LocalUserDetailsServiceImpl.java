@@ -34,7 +34,7 @@ public class LocalUserDetailsServiceImpl implements UserDetailsService {
      */
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UserInfoVO userInfoVO = userService.findByUserAuthIdentifier(username, UserEnum.AuthType.LOCAL);
+        UserInfoVO userInfoVO = userService.findByUserAuthIdentifier(username, UserEnum.AuthType.LOCAL.getType());
         if (userInfoVO == null) {
             throw new UsernameNotFoundException("用户不存在");
         }

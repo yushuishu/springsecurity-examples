@@ -2,9 +2,13 @@ package com.shuishu.demo.security.controller;
 
 
 import com.shuishu.demo.security.common.config.domain.ApiResponse;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.shuishu.demo.security.common.config.security.utils.SpringSecurityUtil;
+import com.shuishu.demo.security.entity.dto.UserLoginDTO;
+import com.shuishu.demo.security.entity.vo.UserInfoVO;
+import com.shuishu.demo.security.enums.UserEnum;
+import com.shuishu.demo.security.service.AuthService;
+import jakarta.annotation.Resource;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author ：谁书-ss
@@ -17,22 +21,28 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("auth")
 public class AuthController {
-    @PostMapping("local")
-    public ApiResponse<String> local(){
+    @Resource
+    private AuthService authService;
 
+    @PostMapping("local")
+    public ApiResponse<UserInfoVO> local(@RequestBody UserLoginDTO userLoginDTO){
+        System.out.println("登录----------- local");
+        return ApiResponse.of(authService.login(userLoginDTO.getUsername(), userLoginDTO.getPassword(), UserEnum.AuthType.LOCAL));
+    }
+
+    @PostMapping("email")
+    public ApiResponse<UserInfoVO> email(@RequestBody UserLoginDTO userLoginDTO){
+        System.out.println("登录----------- email");
         return ApiResponse.success();
     }
 
     @PostMapping("phone")
-    public ApiResponse<String> phone(){
-
+    public ApiResponse<UserInfoVO> phone(@RequestBody UserLoginDTO userLoginDTO){
+        System.out.println("登录----------- phone");
+        SpringSecurityUtil.login(userLoginDTO.getUsername(), userLoginDTO.getPassword(), UserEnum.AuthType.LOCAL);
         return ApiResponse.success();
     }
 
-    @PostMapping("email")
-    public ApiResponse<String> email(){
 
-        return ApiResponse.success();
-    }
 
 }

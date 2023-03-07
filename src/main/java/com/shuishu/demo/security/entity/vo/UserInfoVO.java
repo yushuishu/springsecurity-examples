@@ -2,8 +2,6 @@ package com.shuishu.demo.security.entity.vo;
 
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.shuishu.demo.security.enums.UserEnum;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -26,7 +24,6 @@ import java.util.*;
 @Setter
 @Getter
 @ToString
-@AllArgsConstructor(staticName = "createUser")
 public class UserInfoVO implements UserDetails {
     @Serial
     private static final long serialVersionUID = -7850778107226817897L;
