@@ -1,4 +1,4 @@
-package com.shuishu.demo.security.common.config.security.config;
+package com.shuishu.demo.security.common.config.security;
 
 
 import org.springframework.context.annotation.Bean;

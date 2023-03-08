@@ -1,11 +1,9 @@
-package com.shuishu.demo.security.common.config.security.config;
+package com.shuishu.demo.security.common.config.security;
 
 
 import com.shuishu.demo.security.common.config.security.filter.EmailLoginFilter;
 import com.shuishu.demo.security.common.config.security.filter.LocalLoginFilter;
 import com.shuishu.demo.security.common.config.security.filter.PhoneLoginFilter;
-import com.shuishu.demo.security.common.config.security.handler.MyAuthenticationHandler;
-import com.shuishu.demo.security.common.config.security.utils.SpringSecurityUtil;
 import jakarta.annotation.Resource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -61,7 +59,8 @@ public class SecurityConfig {
                 .requestMatchers(ignoreUrlArray()).permitAll()
                 .anyRequest().authenticated();
 
-        httpSecurity.formLogin().disable()
+        httpSecurity
+                .formLogin().disable()
                 .addFilterBefore(new LocalLoginFilter(myAuthenticationHandler), UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(new EmailLoginFilter(myAuthenticationHandler), UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(new PhoneLoginFilter(myAuthenticationHandler), UsernamePasswordAuthenticationFilter.class)
@@ -77,6 +76,7 @@ public class SecurityConfig {
                 //.and()
                 .exceptionHandling()
                 .accessDeniedHandler(myAuthenticationHandler)
+                .authenticationEntryPoint(myAuthenticationHandler)
                 .authenticationEntryPoint(myAuthenticationHandler)
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);

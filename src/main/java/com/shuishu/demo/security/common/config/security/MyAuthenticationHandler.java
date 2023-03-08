@@ -1,4 +1,4 @@
-package com.shuishu.demo.security.common.config.security.handler;
+package com.shuishu.demo.security.common.config.security;
 
 
 import com.shuishu.demo.security.common.config.domain.ApiResponse;

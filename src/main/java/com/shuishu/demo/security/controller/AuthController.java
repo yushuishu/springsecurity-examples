@@ -2,7 +2,7 @@ package com.shuishu.demo.security.controller;
 
 
 import com.shuishu.demo.security.common.config.domain.ApiResponse;
-import com.shuishu.demo.security.common.config.security.utils.SpringSecurityUtil;
+import com.shuishu.demo.security.common.config.security.SpringSecurityUtil;
 import com.shuishu.demo.security.entity.dto.UserLoginDTO;
 import com.shuishu.demo.security.entity.vo.UserInfoVO;
 import com.shuishu.demo.security.enums.UserEnum;

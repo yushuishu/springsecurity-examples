@@ -1,9 +1,9 @@
 package com.shuishu.demo.security.common.config.security.filter;
 
 
-import com.shuishu.demo.security.common.config.security.handler.MyAuthenticationHandler;
+import com.shuishu.demo.security.common.config.security.MyAuthenticationHandler;
 import com.shuishu.demo.security.common.config.security.token.LocalAuthenticationToken;
-import com.shuishu.demo.security.common.config.security.utils.SpringSecurityUtil;
+import com.shuishu.demo.security.common.config.security.SpringSecurityUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
