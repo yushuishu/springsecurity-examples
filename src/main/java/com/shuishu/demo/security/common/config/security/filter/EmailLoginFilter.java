@@ -7,6 +7,7 @@ import com.shuishu.demo.security.common.config.security.utils.SpringSecurityUtil
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
@@ -26,11 +27,13 @@ import java.io.IOException;
  * @description ：QQ邮箱登录过滤器
  * <p></p>
  */
+@Slf4j
 public class EmailLoginFilter extends AbstractAuthenticationProcessingFilter {
 
     public EmailLoginFilter(MyAuthenticationHandler myAuthenticationHandler) {
         // 登录路径，方式、认证管理器
         super(new AntPathRequestMatcher(SpringSecurityUtil.LOGIN_URL_EMAIL, RequestMethod.POST.name()));
+        log.info("【EmailLoginFilter 过滤器】执行EmailLoginFilter()方法");
         // 认证成功
         setAuthenticationSuccessHandler(myAuthenticationHandler);
         // 认证失败
@@ -39,6 +42,7 @@ public class EmailLoginFilter extends AbstractAuthenticationProcessingFilter {
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException, IOException, ServletException {
+        log.info("【EmailLoginFilter 过滤器】执行attemptAuthentication()方法");
         String userAuthIdentifier = request.getParameter(SpringSecurityUtil.LOGIN_USERNAME_KEY);
         userAuthIdentifier = StringUtils.hasText(userAuthIdentifier) ? userAuthIdentifier.trim() : "";
         String userAuthCredential = request.getParameter(SpringSecurityUtil.LOGIN_PASSWORD_KEY);

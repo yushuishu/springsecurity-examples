@@ -56,6 +56,7 @@ public class MyAuthenticationHandler implements AuthenticationSuccessHandler, Au
      */
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
+        log.info("认证成功：{}", authentication.getPrincipal());
         // 清理使用过的验证码 (Redis)
 
         // 生成token
@@ -88,6 +89,7 @@ public class MyAuthenticationHandler implements AuthenticationSuccessHandler, Au
 
     @Override
     public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
+        log.info("注销成功：{}", authentication.getPrincipal());
         ResponseUtils.responseJson(response, ApiResponse.of(ApiResponse.Type.UN_AUTH.value(), "注销成功"));
     }
 
@@ -98,6 +100,7 @@ public class MyAuthenticationHandler implements AuthenticationSuccessHandler, Au
      */
     @Override
     public void onExpiredSessionDetected(SessionInformationExpiredEvent event) {
+        log.warn("登录已过期，请重新登录");
         ResponseUtils.responseJson(event.getResponse(), ApiResponse.of(HttpStatus.UNAUTHORIZED.value(), "登录已过期，请重新登录"));
     }
 
@@ -110,6 +113,7 @@ public class MyAuthenticationHandler implements AuthenticationSuccessHandler, Au
      */
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) {
+        log.warn("无权限访问：{}", accessDeniedException.getMessage());
         ResponseUtils.responseJson(response, ApiResponse.of(HttpStatus.FORBIDDEN.value(), "无权限访问"));
     }
 
@@ -122,6 +126,7 @@ public class MyAuthenticationHandler implements AuthenticationSuccessHandler, Au
      */
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) {
+        log.warn("请先登录，再访问资源：{}", authException.getMessage());
         ResponseUtils.responseJson(response, ApiResponse.of(HttpStatus.UNAUTHORIZED.value(), "请先登录，再访问资源"));
     }
 

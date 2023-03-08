@@ -5,6 +5,7 @@ import com.shuishu.demo.security.common.config.security.provider.EmailAuthentica
 import com.shuishu.demo.security.common.config.security.provider.LocalDaoAuthenticationProvider;
 import com.shuishu.demo.security.common.config.security.provider.PhoneAuthenticationProvider;
 import jakarta.annotation.Resource;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -20,6 +21,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
  * @description ：AuthenticationManager 配置
  * <p></p>
  */
+@Slf4j
 @Configuration
 public class AuthenticationManagerConfig {
     @Resource
@@ -38,6 +40,7 @@ public class AuthenticationManagerConfig {
      */
     @Bean
     public AuthenticationManager authenticationManager(HttpSecurity httpSecurity) throws Exception {
+        log.info("【AuthenticationManagerConfig】注册bean：authenticationManager");
         AuthenticationManagerBuilder authenticationManagerBuilder = httpSecurity.getSharedObject(AuthenticationManagerBuilder.class);
         authenticationManagerBuilder.authenticationProvider(emailAuthenticationProvider);
         authenticationManagerBuilder.authenticationProvider(phoneAuthenticationProvider);
