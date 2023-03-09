@@ -2,6 +2,8 @@ package com.shuishu.demo.security;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+import org.springframework.validation.beanvalidation.MethodValidationPostProcessor;
 
 
 /**
@@ -34,6 +36,12 @@ public class SpringSecurityExamplesApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(SpringSecurityExamplesApplication.class, args);
+    }
+
+
+    @Bean
+    public MethodValidationPostProcessor mvp(){
+        return new MethodValidationPostProcessor();
     }
 
 }

@@ -5,7 +5,7 @@ import com.shuishu.demo.security.common.config.exception.BusinessException;
 import com.shuishu.demo.security.common.config.security.token.EmailAuthenticationToken;
 import com.shuishu.demo.security.common.config.security.token.LocalAuthenticationToken;
 import com.shuishu.demo.security.common.config.security.token.PhoneAuthenticationToken;
-import com.shuishu.demo.security.entity.vo.UserInfoVO;
+import com.shuishu.demo.security.entity.vo.UserInfoVo;
 import com.shuishu.demo.security.enums.UserEnum;
 import com.shuishu.demo.security.service.AuthService;
 import jakarta.annotation.Resource;
@@ -27,7 +27,7 @@ public class AuthServiceImpl implements AuthService {
     private AuthenticationManager authenticationManager;
 
     @Override
-    public UserInfoVO login(String name, String pwd, UserEnum.AuthType authType) {
+    public UserInfoVo login(String name, String pwd, UserEnum.AuthType authType) {
         Authentication authentication = null;
         if (UserEnum.AuthType.LOCAL.equals(authType)){
             authentication = authenticationManager.authenticate(new LocalAuthenticationToken(name, pwd));
@@ -38,7 +38,7 @@ public class AuthServiceImpl implements AuthService {
         }else {
             throw new BusinessException("不支持的登录方式");
         }
-        UserInfoVO userInfoVO = (UserInfoVO) authentication.getPrincipal();
+        UserInfoVo userInfoVO = (UserInfoVo) authentication.getPrincipal();
 
         // 生成token，或者在provider中生成
 

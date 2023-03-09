@@ -25,7 +25,7 @@ import java.util.Date;
 @Getter
 @ToString
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class UserVO extends BaseVO<User> {
+public class UserVo extends BaseVO<User> {
     @Serial
     private static final long serialVersionUID = 9085380458828742302L;
     /**

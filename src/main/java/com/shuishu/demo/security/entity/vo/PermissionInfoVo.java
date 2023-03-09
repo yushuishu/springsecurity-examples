@@ -20,7 +20,7 @@ import java.io.Serial;
 @Setter
 @Getter
 @ToString
-public class PermissionInfoVO extends BaseVO<Permission> {
+public class PermissionInfoVo extends BaseVO<Permission> {
     @Serial
     private static final long serialVersionUID = 6581320655357167673L;
     /**

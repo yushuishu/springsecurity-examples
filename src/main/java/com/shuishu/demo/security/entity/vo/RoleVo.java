@@ -4,7 +4,7 @@ package com.shuishu.demo.security.entity.vo;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.shuishu.demo.security.common.config.domain.BaseVO;
-import com.shuishu.demo.security.entity.po.Permission;
+import com.shuishu.demo.security.entity.po.Role;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -14,7 +14,7 @@ import java.util.Date;
 
 /**
  * @author ：谁书-ss
- * @date ：2023-01-01 16:02
+ * @date ：2023-01-01 15:59
  * @IDE ：IntelliJ IDEA
  * @Motto ：ABC(Always Be Coding)
  * <p></p>
@@ -24,19 +24,15 @@ import java.util.Date;
 @Getter
 @ToString
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class PermissionVO extends BaseVO<Permission> {
+public class RoleVo extends BaseVO<Role> {
     @Serial
-    private static final long serialVersionUID = -86694503222454689L;
+    private static final long serialVersionUID = 1286143384701589148L;
 
-    private Long permissionId;
+    private Long roleId;
 
-    private String permissionCode;
+    private String roleName;
 
-    private String permissionUrl;
-
-    private String permissionDescription;
-
-    private Long permissionParentId;
+    private String roleCode;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date updateTime;

@@ -8,7 +8,6 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.io.Serial;
-import java.util.List;
 
 /**
  * @author ：谁书-ss
@@ -21,7 +20,7 @@ import java.util.List;
 @Setter
 @Getter
 @ToString
-public class RoleInfoVO extends BaseVO<Role> {
+public class RoleInfoVo extends BaseVO<Role> {
     @Serial
     private static final long serialVersionUID = 3491624868548321484L;
 

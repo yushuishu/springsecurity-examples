@@ -1,7 +1,7 @@
 package com.shuishu.demo.security.service;
 
 
-import com.shuishu.demo.security.entity.vo.UserInfoVO;
+import com.shuishu.demo.security.entity.vo.UserInfoVo;
 import com.shuishu.demo.security.enums.UserEnum;
 
 /**
@@ -22,5 +22,5 @@ public interface AuthService {
      * @param authType -
      * @return -
      */
-    UserInfoVO login(String name, String pwd, UserEnum.AuthType authType);
+    UserInfoVo login(String name, String pwd, UserEnum.AuthType authType);
 }

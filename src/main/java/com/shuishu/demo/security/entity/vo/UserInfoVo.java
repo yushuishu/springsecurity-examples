@@ -24,7 +24,7 @@ import java.util.*;
 @Setter
 @Getter
 @ToString
-public class UserInfoVO implements UserDetails {
+public class UserInfoVo implements UserDetails {
     @Serial
     private static final long serialVersionUID = -7850778107226817897L;
 
@@ -97,11 +97,11 @@ public class UserInfoVO implements UserDetails {
     /**
      * 角色集合
      */
-    private List<RoleInfoVO> roleInfoList;
+    private List<RoleInfoVo> roleInfoList;
     /**
      * 权限集合
      */
-    private List<PermissionInfoVO> permissionInfoList;
+    private List<PermissionInfoVo> permissionInfoList;
 
 
 

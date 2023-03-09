@@ -1,13 +1,10 @@
 package com.shuishu.demo.security.common.config.security;
 
 
-import com.shuishu.demo.security.common.config.security.filter.EmailLoginFilter;
-import com.shuishu.demo.security.common.config.security.filter.LocalLoginFilter;
-import com.shuishu.demo.security.common.config.security.filter.PhoneLoginFilter;
 import com.shuishu.demo.security.common.config.security.token.EmailAuthenticationToken;
 import com.shuishu.demo.security.common.config.security.token.LocalAuthenticationToken;
 import com.shuishu.demo.security.common.config.security.token.PhoneAuthenticationToken;
-import com.shuishu.demo.security.entity.vo.UserInfoVO;
+import com.shuishu.demo.security.entity.vo.UserInfoVo;
 import com.shuishu.demo.security.enums.UserEnum;
 import com.shuishu.demo.security.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -18,8 +15,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.ProviderManager;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -74,7 +69,7 @@ public class AuthenticationConfig {
                 log.info("【LocalDaoAuthenticationProvider 认证】执行authenticate()方法，获取密码：" + userAuthCredential);
 
                 // 获取账号用户信息
-                UserInfoVO userInfoVO = (UserInfoVO) localUserDetailsService().loadUserByUsername(userAuthIdentifier);
+                UserInfoVo userInfoVO = (UserInfoVo) localUserDetailsService().loadUserByUsername(userAuthIdentifier);
                 log.info("【LocalDaoAuthenticationProvider 认证】执行authenticate()方法，查询用户：" + userInfoVO);
 
                 // 校验密码正确性
@@ -108,7 +103,7 @@ public class AuthenticationConfig {
 
 
                 // 获取邮箱用户信息
-                UserInfoVO userInfoVO = (UserInfoVO) emailUserDetailsService().loadUserByUsername(userAuthIdentifier);
+                UserInfoVo userInfoVO = (UserInfoVo) emailUserDetailsService().loadUserByUsername(userAuthIdentifier);
 
                 return new EmailAuthenticationToken(userInfoVO, authentication.getAuthorities());
             }
@@ -134,7 +129,7 @@ public class AuthenticationConfig {
                 // 校验 手机验证码
 
                 // 获取手机号用户信息
-                UserInfoVO userInfoVO = (UserInfoVO) phoneUserDetailsService().loadUserByUsername(userAuthIdentifier);
+                UserInfoVo userInfoVO = (UserInfoVo) phoneUserDetailsService().loadUserByUsername(userAuthIdentifier);
                 return new PhoneAuthenticationToken(userInfoVO, authentication.getCredentials());
             }
 
@@ -151,7 +146,7 @@ public class AuthenticationConfig {
             @Override
             public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
                 log.info("【LocalUserDetailsServiceImpl 认证】执行loadUserByUsername() 方法，获取账号：" + username);
-                UserInfoVO userInfoVO = userService.findByUserAuthIdentifier(username, UserEnum.AuthType.LOCAL.getType());
+                UserInfoVo userInfoVO = userService.findByUserAuthIdentifier(username, UserEnum.AuthType.LOCAL.getType());
                 if (userInfoVO == null) {
                     throw new UsernameNotFoundException("用户不存在");
                 }
@@ -166,7 +161,7 @@ public class AuthenticationConfig {
             @Override
             public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
                 log.info("【EmailUserDetailsServiceImpl 认证】执行loadUserByUsername() 方法，获取账号：" + username);
-                UserInfoVO userInfoVO = userService.findByUserAuthIdentifier(username, UserEnum.AuthType.EMAIL.getType());
+                UserInfoVo userInfoVO = userService.findByUserAuthIdentifier(username, UserEnum.AuthType.EMAIL.getType());
                 if (userInfoVO == null) {
                     throw new UsernameNotFoundException("用户不存在");
                 }
@@ -181,7 +176,7 @@ public class AuthenticationConfig {
             @Override
             public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
                 log.info("【PhoneUserDetailsServiceImpl 认证】执行loadUserByUsername() 方法，获取账号：" + username);
-                UserInfoVO userInfoVO = userService.findByUserAuthIdentifier(username, UserEnum.AuthType.PHONE.getType());
+                UserInfoVo userInfoVO = userService.findByUserAuthIdentifier(username, UserEnum.AuthType.PHONE.getType());
                 if (userInfoVO == null) {
                     throw new UsernameNotFoundException("用户不存在");
                 }

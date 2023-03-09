@@ -12,7 +12,7 @@ import lombok.ToString;
 @Setter
 @Getter
 @ToString
-public class UserLoginDTO {
+public class UserLoginDto {
     private String username;
 
     private String password;

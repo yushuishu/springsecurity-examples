@@ -5,7 +5,7 @@ import com.querydsl.core.types.Projections;
 import com.shuishu.demo.security.common.config.jdbc.BaseDsl;
 import com.shuishu.demo.security.entity.po.QUser;
 import com.shuishu.demo.security.entity.po.QUserAuth;
-import com.shuishu.demo.security.entity.vo.UserInfoVO;
+import com.shuishu.demo.security.entity.vo.UserInfoVo;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
@@ -22,11 +22,11 @@ public class UserAuthDsl extends BaseDsl {
     private final QUserAuth qUserAuth = QUserAuth.userAuth;
     private final QUser qUser = QUser.user;
 
-    public UserInfoVO findByUserAuthIdentifier(String userAuthIdentifier, String userAuthType) {
+    public UserInfoVo findByUserAuthIdentifier(String userAuthIdentifier, String userAuthType) {
         if (!StringUtils.hasText(userAuthIdentifier) || !StringUtils.hasText(userAuthType)) {
             return null;
         }
-        return jpaQueryFactory.select(Projections.fields(UserInfoVO.class,
+        return jpaQueryFactory.select(Projections.fields(UserInfoVo.class,
                         qUser.userId, qUser.nickname,
                         qUser.nickname,
                         qUser.userAbout,

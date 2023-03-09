@@ -3,8 +3,8 @@ package com.shuishu.demo.security.controller;
 
 import com.shuishu.demo.security.common.config.domain.ApiResponse;
 import com.shuishu.demo.security.common.config.security.SpringSecurityUtil;
-import com.shuishu.demo.security.entity.dto.UserLoginDTO;
-import com.shuishu.demo.security.entity.vo.UserInfoVO;
+import com.shuishu.demo.security.entity.dto.UserLoginDto;
+import com.shuishu.demo.security.entity.vo.UserInfoVo;
 import com.shuishu.demo.security.enums.UserEnum;
 import com.shuishu.demo.security.service.AuthService;
 import jakarta.annotation.Resource;
@@ -25,19 +25,19 @@ public class AuthController {
     private AuthService authService;
 
     @PostMapping("local")
-    public ApiResponse<UserInfoVO> local(@RequestBody UserLoginDTO userLoginDTO){
+    public ApiResponse<UserInfoVo> local(@RequestBody UserLoginDto userLoginDTO){
         System.out.println("登录----------- local");
         return ApiResponse.of(authService.login(userLoginDTO.getUsername(), userLoginDTO.getPassword(), UserEnum.AuthType.LOCAL));
     }
 
     @PostMapping("email")
-    public ApiResponse<UserInfoVO> email(@RequestBody UserLoginDTO userLoginDTO){
+    public ApiResponse<UserInfoVo> email(@RequestBody UserLoginDto userLoginDTO){
         System.out.println("登录----------- email");
         return ApiResponse.of(authService.login(userLoginDTO.getUsername(), userLoginDTO.getPassword(), UserEnum.AuthType.EMAIL));
     }
 
     @PostMapping("phone")
-    public ApiResponse<UserInfoVO> phone(@RequestBody UserLoginDTO userLoginDTO){
+    public ApiResponse<UserInfoVo> phone(@RequestBody UserLoginDto userLoginDTO){
         System.out.println("登录----------- phone");
         SpringSecurityUtil.login(userLoginDTO.getUsername(), userLoginDTO.getPassword(), UserEnum.AuthType.LOCAL);
         return ApiResponse.of(authService.login(userLoginDTO.getUsername(), userLoginDTO.getPassword(), UserEnum.AuthType.PHONE));
