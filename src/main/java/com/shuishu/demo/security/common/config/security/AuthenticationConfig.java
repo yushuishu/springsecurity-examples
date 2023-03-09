@@ -1,6 +1,9 @@
 package com.shuishu.demo.security.common.config.security;
 
 
+import com.shuishu.demo.security.common.config.security.filter.EmailLoginFilter;
+import com.shuishu.demo.security.common.config.security.filter.LocalLoginFilter;
+import com.shuishu.demo.security.common.config.security.filter.PhoneLoginFilter;
 import com.shuishu.demo.security.common.config.security.token.EmailAuthenticationToken;
 import com.shuishu.demo.security.common.config.security.token.LocalAuthenticationToken;
 import com.shuishu.demo.security.common.config.security.token.PhoneAuthenticationToken;
@@ -14,8 +17,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -39,6 +43,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class AuthenticationConfig {
     private final UserService userService;
+    private final MyAuthenticationHandler myAuthenticationHandler;
 
 
     @Bean
@@ -47,13 +52,14 @@ public class AuthenticationConfig {
     }
 
     @Bean
-    public AuthenticationManager authenticationManager(HttpSecurity httpSecurity) throws Exception {
+    public AuthenticationManager authenticationManager() {
         log.info("【AuthenticationManagerConfig】注册bean：authenticationManager");
-        AuthenticationManagerBuilder authenticationManagerBuilder = httpSecurity.getSharedObject(AuthenticationManagerBuilder.class);
-        authenticationManagerBuilder.authenticationProvider(localDaoAuthenticationProvider());
-        authenticationManagerBuilder.authenticationProvider(emailAuthenticationProvider());
-        authenticationManagerBuilder.authenticationProvider(phoneAuthenticationProvider());
-        return authenticationManagerBuilder.build();
+        //AuthenticationManagerBuilder authenticationManagerBuilder = httpSecurity.getSharedObject(AuthenticationManagerBuilder.class);
+        //AuthenticationManager authenticationManager = authenticationConfiguration.getAuthenticationManager();
+        //authenticationManager.authenticationProvider(localDaoAuthenticationProvider());
+        //authenticationManager.authenticationProvider(emailAuthenticationProvider());
+        //authenticationManager.authenticationProvider(phoneAuthenticationProvider());
+        return new ProviderManager(localDaoAuthenticationProvider(), emailAuthenticationProvider(), phoneAuthenticationProvider());
     }
 
     @Bean

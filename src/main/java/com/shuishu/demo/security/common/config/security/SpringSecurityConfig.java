@@ -4,9 +4,10 @@ package com.shuishu.demo.security.common.config.security;
 import com.shuishu.demo.security.common.config.security.filter.EmailLoginFilter;
 import com.shuishu.demo.security.common.config.security.filter.LocalLoginFilter;
 import com.shuishu.demo.security.common.config.security.filter.PhoneLoginFilter;
-import jakarta.annotation.Resource;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -27,11 +28,15 @@ import javax.sql.DataSource;
  */
 @Configuration
 @EnableWebSecurity
-public class SecurityConfig {
-    //@Resource
-    //private DbRememberMeServices dbRememberMeServices;
-    @Resource
-    private MyAuthenticationHandler myAuthenticationHandler;
+@RequiredArgsConstructor
+public class SpringSecurityConfig {
+
+    private final MyAuthenticationHandler myAuthenticationHandler;
+    private final AuthenticationManager authenticationManager;
+    private final LocalLoginFilter localLoginFilter;
+    private final EmailLoginFilter emailLoginFilter;
+    private final PhoneLoginFilter phoneLoginFilter;
+
 
 
     /**
@@ -61,9 +66,9 @@ public class SecurityConfig {
 
         httpSecurity
                 .formLogin().disable()
-                .addFilterBefore(new LocalLoginFilter(myAuthenticationHandler), UsernamePasswordAuthenticationFilter.class)
-                .addFilterBefore(new EmailLoginFilter(myAuthenticationHandler), UsernamePasswordAuthenticationFilter.class)
-                .addFilterBefore(new PhoneLoginFilter(myAuthenticationHandler), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(localLoginFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(emailLoginFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(phoneLoginFilter, UsernamePasswordAuthenticationFilter.class)
                 .logout()
                 .logoutUrl(SpringSecurityUtil.LOGOUT_URL)
                 .logoutSuccessHandler(myAuthenticationHandler)
@@ -76,7 +81,6 @@ public class SecurityConfig {
                 //.and()
                 .exceptionHandling()
                 .accessDeniedHandler(myAuthenticationHandler)
-                .authenticationEntryPoint(myAuthenticationHandler)
                 .authenticationEntryPoint(myAuthenticationHandler)
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);

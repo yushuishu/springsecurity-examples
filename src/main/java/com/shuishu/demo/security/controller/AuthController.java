@@ -33,14 +33,14 @@ public class AuthController {
     @PostMapping("email")
     public ApiResponse<UserInfoVO> email(@RequestBody UserLoginDTO userLoginDTO){
         System.out.println("登录----------- email");
-        return ApiResponse.success();
+        return ApiResponse.of(authService.login(userLoginDTO.getUsername(), userLoginDTO.getPassword(), UserEnum.AuthType.EMAIL));
     }
 
     @PostMapping("phone")
     public ApiResponse<UserInfoVO> phone(@RequestBody UserLoginDTO userLoginDTO){
         System.out.println("登录----------- phone");
         SpringSecurityUtil.login(userLoginDTO.getUsername(), userLoginDTO.getPassword(), UserEnum.AuthType.LOCAL);
-        return ApiResponse.success();
+        return ApiResponse.of(authService.login(userLoginDTO.getUsername(), userLoginDTO.getPassword(), UserEnum.AuthType.PHONE));
     }
 
 
