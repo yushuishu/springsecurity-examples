@@ -150,8 +150,8 @@ public class RedisUtils {
     /**
      * 递增
      *
-     * @param key 键
-     * @param delta  要增加几(大于0)
+     * @param key   键
+     * @param delta 要增加几(大于0)
      * @return -
      */
     public long incr(@NotBlank(message = "key不能为空") String key, @Min(value = 5, message = "增加时间最短5秒") long delta) {
@@ -161,8 +161,8 @@ public class RedisUtils {
     /**
      * 递减
      *
-     * @param key 键
-     * @param delta  要减少几(小于0)
+     * @param key   键
+     * @param delta 要减少几(小于0)
      * @return -
      */
     public long decr(@NotBlank(message = "key不能为空") String key, @Min(value = 5, message = "减少时间最短5秒") long delta) {
@@ -242,8 +242,8 @@ public class RedisUtils {
      * @return true 成功 false失败
      */
     public boolean hashTableSet(@NotBlank(message = "key不能为空") String key,
-                           @NotBlank(message = "item不能为空") String item,
-                           @Nonnull Object value) {
+                                @NotBlank(message = "item不能为空") String item,
+                                @Nonnull Object value) {
         try {
             redisTemplate.opsForHash().put(key, item, value);
             return true;
@@ -302,31 +302,30 @@ public class RedisUtils {
     /**
      * hash递增 如果不存在,就会创建一个 并把新增后的值返回
      *
-     * @param key  键
-     * @param item 项
-     * @param increaseNumber   要增加几(大于0)
+     * @param key            键
+     * @param item           项
+     * @param increaseNumber 要增加几(大于0)
      * @return -
      */
     public double hashTableIncrease(@NotBlank(message = "key不能为空") String key,
-                                @NotBlank(message = "item不能为空") String item,
-                                @Min(value = 1, message = "增加最小1") double increaseNumber) {
+                                    @NotBlank(message = "item不能为空") String item,
+                                    @Min(value = 1, message = "增加最小1") double increaseNumber) {
         return redisTemplate.opsForHash().increment(key, item, increaseNumber);
     }
 
     /**
      * hash递减
      *
-     * @param key  键
-     * @param item 项
-     * @param decreaseNumber   要减少记(小于0)
+     * @param key            键
+     * @param item           项
+     * @param decreaseNumber 要减少记(小于0)
      * @return -
      */
     public double hashTableDecrease(@NotBlank(message = "key不能为空") String key,
-                        @NotBlank(message = "item不能为空") String item,
-                        @Min(value = 1, message = "减少最小1") double decreaseNumber) {
+                                    @NotBlank(message = "item不能为空") String item,
+                                    @Min(value = 1, message = "减少最小1") double decreaseNumber) {
         return redisTemplate.opsForHash().increment(key, item, -decreaseNumber);
     }
-
 
 
     //============================ set =============================

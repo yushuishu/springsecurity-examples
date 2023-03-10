@@ -34,19 +34,19 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public UserInfoVo login(String name, String pwd, UserEnum.AuthType authType, HttpServletResponse response) {
         Authentication authentication = null;
-        if (UserEnum.AuthType.LOCAL.equals(authType)){
+        if (UserEnum.AuthType.LOCAL.equals(authType)) {
             authentication = authenticationManager.authenticate(new LocalAuthenticationToken(name, pwd));
-        }else if (UserEnum.AuthType.EMAIL.equals(authType)){
+        } else if (UserEnum.AuthType.EMAIL.equals(authType)) {
             authentication = authenticationManager.authenticate(new EmailAuthenticationToken(name, pwd));
-        }else if (UserEnum.AuthType.PHONE.equals(authType)){
+        } else if (UserEnum.AuthType.PHONE.equals(authType)) {
             authentication = authenticationManager.authenticate(new PhoneAuthenticationToken(name, pwd));
-        }else {
+        } else {
             throw new BusinessException("不支持的登录方式");
         }
         UserInfoVo userInfoVO = (UserInfoVo) authentication.getPrincipal();
 
         // 生成token，或者在provider中生成
-        if (userInfoVO != null && !tokenUtils.setUserInfoVo(userInfoVO, response)){
+        if (userInfoVO != null && !tokenUtils.setUserInfoVo(userInfoVO, response)) {
             throw new BusinessException(401, "登录失败");
         }
         return userInfoVO;

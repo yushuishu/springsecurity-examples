@@ -22,7 +22,8 @@ import java.nio.charset.StandardCharsets;
 @Component
 public class ResponseUtils {
     private static ObjectMapper objectMapper;
-    public ResponseUtils(ObjectMapper objectMapper){
+
+    public ResponseUtils(ObjectMapper objectMapper) {
         ResponseUtils.objectMapper = objectMapper;
     }
 
@@ -30,10 +31,10 @@ public class ResponseUtils {
     /**
      * 响应字符串
      *
-     * @param response 响应对象
+     * @param response    响应对象
      * @param apiResponse 响应对象
      */
-    public static void responseJson(HttpServletResponse response, ApiResponse<?> apiResponse){
+    public static void responseJson(HttpServletResponse response, ApiResponse<?> apiResponse) {
         try {
             response.setContentType(MediaType.APPLICATION_JSON_VALUE);
             response.setCharacterEncoding(StandardCharsets.UTF_8.name());

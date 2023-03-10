@@ -45,11 +45,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserInfoVo findByUserAuthIdentifier(String userAuthIdentifier, String authType) {
         UserAuth userAuth = userAuthRepository.findByUserAuthIdentifierAndAndUserAuthType(userAuthIdentifier, authType);
-        if (userAuth == null){
+        if (userAuth == null) {
             return null;
         }
         User user = userRepository.findByUserId(userAuth.getUserId());
-        if (user == null){
+        if (user == null) {
             return null;
         }
 
@@ -59,11 +59,11 @@ public class UserServiceImpl implements UserService {
 
         // 角色
         List<RoleInfoVo> roleInfoList = roleDsl.findRoleInfoByUserId(userInfoVO.getUserId());
-        if (!ObjectUtils.isEmpty(roleInfoList)){
+        if (!ObjectUtils.isEmpty(roleInfoList)) {
             userInfoVO.setRoleInfoList(roleInfoList);
             // 权限
             List<PermissionInfoVo> permissionInfoList = permissionDsl.findPermissionInfoByRoleIdList(roleInfoList.stream().map(RoleInfoVo::getRoleId).toList());
-            if (!ObjectUtils.isEmpty(permissionInfoList)){
+            if (!ObjectUtils.isEmpty(permissionInfoList)) {
                 userInfoVO.setPermissionInfoList(permissionInfoList);
             }
         }

@@ -68,10 +68,10 @@ public class TokenUtils {
     }
 
     public boolean setUserInfoVo(UserInfoVo userInfoVo, HttpServletResponse response) {
-        if (userInfoVo != null){
+        if (userInfoVo != null) {
             String authToken = createToken();
             String refreshToken = createToken();
-            if (StringUtils.hasText(authToken) && StringUtils.hasText(refreshToken)){
+            if (StringUtils.hasText(authToken) && StringUtils.hasText(refreshToken)) {
                 redisUtils.strSet(authToken, userInfoVo, ymlExpireTime);
                 redisUtils.strSet(refreshToken, userInfoVo, ymlRefreshTokenExpireTime);
                 response.setHeader(ymlAuthToken, authToken);

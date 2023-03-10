@@ -37,7 +37,7 @@ public class PhoneLoginFilter extends OncePerRequestFilter {
         String requestURI = request.getRequestURI();
         // 获取token
         final String authToken = request.getHeader("token");
-        if (!StringUtils.hasText(authToken)){
+        if (!StringUtils.hasText(authToken)) {
             filterChain.doFilter(request, response);
             return;
         }

@@ -42,7 +42,7 @@ public class AuthenticationConfig {
 
 
     @Bean
-    public BCryptPasswordEncoder passwordEncoder(){
+    public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
@@ -58,7 +58,7 @@ public class AuthenticationConfig {
     }
 
     @Bean
-    public AuthenticationProvider localDaoAuthenticationProvider(){
+    public AuthenticationProvider localDaoAuthenticationProvider() {
         return new AuthenticationProvider() {
             @Override
             public Authentication authenticate(Authentication authentication) throws AuthenticationException {
@@ -73,7 +73,7 @@ public class AuthenticationConfig {
                 log.info("【LocalDaoAuthenticationProvider 认证】执行authenticate()方法，查询用户：" + userInfoVO);
 
                 // 校验密码正确性
-                if (!passwordEncoder().matches(userAuthCredential, userInfoVO.getUserAuthCredential())){
+                if (!passwordEncoder().matches(userAuthCredential, userInfoVO.getUserAuthCredential())) {
                     log.info("【LocalDaoAuthenticationProvider 认证】执行authenticate()方法，账号：{} 密码错误", userAuthIdentifier);
                     throw new BadCredentialsException("用户名或密码不正确");
                 }
@@ -89,7 +89,7 @@ public class AuthenticationConfig {
     }
 
     @Bean
-    public AuthenticationProvider emailAuthenticationProvider(){
+    public AuthenticationProvider emailAuthenticationProvider() {
         return new AuthenticationProvider() {
             @Override
             public Authentication authenticate(Authentication authentication) throws AuthenticationException {
@@ -116,7 +116,7 @@ public class AuthenticationConfig {
     }
 
     @Bean
-    public AuthenticationProvider phoneAuthenticationProvider(){
+    public AuthenticationProvider phoneAuthenticationProvider() {
         return new AuthenticationProvider() {
             @Override
             public Authentication authenticate(Authentication authentication) throws AuthenticationException {
@@ -141,7 +141,7 @@ public class AuthenticationConfig {
     }
 
     @Bean
-    public UserDetailsService localUserDetailsService(){
+    public UserDetailsService localUserDetailsService() {
         return new UserDetailsService() {
             @Override
             public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -156,7 +156,7 @@ public class AuthenticationConfig {
     }
 
     @Bean
-    public UserDetailsService emailUserDetailsService(){
+    public UserDetailsService emailUserDetailsService() {
         return new UserDetailsService() {
             @Override
             public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -171,7 +171,7 @@ public class AuthenticationConfig {
     }
 
     @Bean
-    public UserDetailsService phoneUserDetailsService(){
+    public UserDetailsService phoneUserDetailsService() {
         return new UserDetailsService() {
             @Override
             public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

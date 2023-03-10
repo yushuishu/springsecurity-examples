@@ -38,7 +38,6 @@ public class SpringSecurityConfig {
     private final PhoneLoginFilter phoneLoginFilter;
 
 
-
     /**
      * 自定义RememberMe服务token持久化仓库
      *
@@ -57,11 +56,11 @@ public class SpringSecurityConfig {
 
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception{
+    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         // 路径配置 （authorizeRequests 方法已废弃，取而代之的是 authorizeHttpRequests）
         // http.antMatcher()不再可用，并被替换为 http.securityMatcher() 或 httpSecurity.requestMatchers()
         httpSecurity.authorizeHttpRequests()
-                .requestMatchers(SpringSecurityUtil.ignoreUrlArray()).permitAll()
+                .requestMatchers(SpringSecurityUtils.ignoreUrlArray()).permitAll()
                 .anyRequest().authenticated();
 
         httpSecurity
@@ -70,7 +69,7 @@ public class SpringSecurityConfig {
                 .addFilterBefore(emailLoginFilter, UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(phoneLoginFilter, UsernamePasswordAuthenticationFilter.class)
                 .logout()
-                .logoutUrl(SpringSecurityUtil.LOGOUT_URL)
+                .logoutUrl(SpringSecurityUtils.LOGOUT_URL)
                 .logoutSuccessHandler(globalAuthenticationHandler)
                 //.and()
                 //.rememberMe().rememberMeServices(dbRememberMeServices)

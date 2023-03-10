@@ -2,7 +2,7 @@ package com.shuishu.demo.security.controller;
 
 
 import com.shuishu.demo.security.common.config.domain.ApiResponse;
-import com.shuishu.demo.security.common.config.security.SpringSecurityUtil;
+import com.shuishu.demo.security.common.config.security.SpringSecurityUtils;
 import com.shuishu.demo.security.entity.dto.UserLoginDto;
 import com.shuishu.demo.security.entity.vo.UserInfoVo;
 import com.shuishu.demo.security.enums.UserEnum;
@@ -40,7 +40,7 @@ public class AuthController {
     @PostMapping("phone")
     public ApiResponse<UserInfoVo> phone(@RequestBody UserLoginDto userLoginDTO, HttpServletResponse response){
         System.out.println("登录----------- phone");
-        SpringSecurityUtil.login(userLoginDTO.getUsername(), userLoginDTO.getPassword(), UserEnum.AuthType.LOCAL);
+        SpringSecurityUtils.login(userLoginDTO.getUsername(), userLoginDTO.getPassword(), UserEnum.AuthType.LOCAL);
         return ApiResponse.of(authService.login(userLoginDTO.getUsername(), userLoginDTO.getPassword(), UserEnum.AuthType.PHONE, response));
     }
 

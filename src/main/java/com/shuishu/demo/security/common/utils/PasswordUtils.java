@@ -55,7 +55,7 @@ public class PasswordUtils {
     /**
      * key为自定义密钥
      *
-     * @param key 自定义密钥
+     * @param key             自定义密钥
      * @param decryptPassword 待解密的值
      * @return 解密后的值
      */
