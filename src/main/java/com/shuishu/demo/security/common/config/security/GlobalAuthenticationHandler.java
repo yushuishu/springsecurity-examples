@@ -41,7 +41,7 @@ import org.springframework.stereotype.Component;
  */
 @Slf4j
 @Component
-public class MyAuthenticationHandler implements AuthenticationSuccessHandler, AuthenticationFailureHandler,
+public class GlobalAuthenticationHandler implements AuthenticationSuccessHandler, AuthenticationFailureHandler,
         LogoutSuccessHandler, SessionInformationExpiredStrategy,
         AccessDeniedHandler, AuthenticationEntryPoint {
 

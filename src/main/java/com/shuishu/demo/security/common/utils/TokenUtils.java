@@ -63,22 +63,36 @@ public class TokenUtils {
     private final RedisUtils redisUtils;
 
 
-
-    public String createToken(){
+    public String createToken() {
         return PasswordUtils.encrypt(ymlSecret, UUID.randomUUID().toString().replace("-", ""));
     }
 
-    public UserInfoVo getUserInfoVo(HttpServletRequest request, HttpServletResponse response){
+    public boolean setUserInfoVo(UserInfoVo userInfoVo, HttpServletResponse response) {
+        if (userInfoVo != null){
+            String authToken = createToken();
+            String refreshToken = createToken();
+            if (StringUtils.hasText(authToken) && StringUtils.hasText(refreshToken)){
+                redisUtils.strSet(authToken, userInfoVo, ymlExpireTime);
+                redisUtils.strSet(refreshToken, userInfoVo, ymlRefreshTokenExpireTime);
+                response.setHeader(ymlAuthToken, authToken);
+                response.setHeader(ymlRefreshToken, refreshToken);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public UserInfoVo getUserInfoVo(HttpServletRequest request, HttpServletResponse response) {
         UserInfoVo userInfoVo = null;
         String headerAuthToken = request.getHeader(ymlAuthToken);
-        if (StringUtils.hasText(headerAuthToken)){
+        if (StringUtils.hasText(headerAuthToken)) {
             Object userInfoObjForAuthToken = redisUtils.strGet(headerAuthToken);
-            if (userInfoObjForAuthToken == null){
+            if (userInfoObjForAuthToken == null) {
                 // 尝试获取刷新 token
                 String headerRefreshToken = request.getHeader(ymlRefreshToken);
-                if (StringUtils.hasText(headerRefreshToken)){
+                if (StringUtils.hasText(headerRefreshToken)) {
                     Object userInfoObjForRefreshToken = redisUtils.strGet(headerRefreshToken);
-                    if (userInfoObjForRefreshToken == null){
+                    if (userInfoObjForRefreshToken == null) {
                         return null;
                     }
                     userInfoVo = (UserInfoVo) userInfoObjForRefreshToken;
@@ -86,21 +100,21 @@ public class TokenUtils {
                     return userInfoVo;
                 }
                 return null;
-            }else {
+            } else {
                 userInfoVo = (UserInfoVo) userInfoObjForAuthToken;
                 long expire = redisUtils.getExpire(headerAuthToken);
-                if (expire < ymlSurplusRefreshTime){
+                if (expire < ymlSurplusRefreshTime) {
                     // 刷新token
                     redisUtils.strSet(headerAuthToken, userInfoVo, ymlExpireTime);
                 }
                 return userInfoVo;
             }
-        }else {
+        } else {
             // 请求头没有 AuthToken 只有 RefreshToken 也尽最大可能的尝试获取用户信息，创建新的 token，进行缓存
             String headerRefreshToken = request.getHeader(ymlRefreshToken);
-            if (StringUtils.hasText(headerRefreshToken)){
+            if (StringUtils.hasText(headerRefreshToken)) {
                 Object userInfoObjForRefreshToken = redisUtils.strGet(headerRefreshToken);
-                if (userInfoObjForRefreshToken == null){
+                if (userInfoObjForRefreshToken == null) {
                     return null;
                 }
                 userInfoVo = (UserInfoVo) userInfoObjForRefreshToken;

@@ -31,7 +31,7 @@ import javax.sql.DataSource;
 @RequiredArgsConstructor
 public class SpringSecurityConfig {
 
-    private final MyAuthenticationHandler myAuthenticationHandler;
+    private final GlobalAuthenticationHandler globalAuthenticationHandler;
     private final AuthenticationManager authenticationManager;
     private final LocalLoginFilter localLoginFilter;
     private final EmailLoginFilter emailLoginFilter;
@@ -61,7 +61,7 @@ public class SpringSecurityConfig {
         // 路径配置 （authorizeRequests 方法已废弃，取而代之的是 authorizeHttpRequests）
         // http.antMatcher()不再可用，并被替换为 http.securityMatcher() 或 httpSecurity.requestMatchers()
         httpSecurity.authorizeHttpRequests()
-                .requestMatchers(ignoreUrlArray()).permitAll()
+                .requestMatchers(SpringSecurityUtil.ignoreUrlArray()).permitAll()
                 .anyRequest().authenticated();
 
         httpSecurity
@@ -71,7 +71,7 @@ public class SpringSecurityConfig {
                 .addFilterBefore(phoneLoginFilter, UsernamePasswordAuthenticationFilter.class)
                 .logout()
                 .logoutUrl(SpringSecurityUtil.LOGOUT_URL)
-                .logoutSuccessHandler(myAuthenticationHandler)
+                .logoutSuccessHandler(globalAuthenticationHandler)
                 //.and()
                 //.rememberMe().rememberMeServices(dbRememberMeServices)
                 .and()
@@ -80,20 +80,12 @@ public class SpringSecurityConfig {
                 //.csrfTokenRequestHandler(new CsrfTokenRequestAttributeHandler())
                 //.and()
                 .exceptionHandling()
-                .accessDeniedHandler(myAuthenticationHandler)
-                .authenticationEntryPoint(myAuthenticationHandler)
+                .accessDeniedHandler(globalAuthenticationHandler)
+                .authenticationEntryPoint(globalAuthenticationHandler)
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         return httpSecurity.build();
     }
 
-    private static String[] ignoreUrlArray(){
-        return new String[]{
-                "/api/shuishu/demo/doc.html",
-                "/api/shuishu/demo/webjars/**",
-                "/api/shuishu/demo/v3/api-docs/**",
-                "/auth/**"
-        };
-    }
 }

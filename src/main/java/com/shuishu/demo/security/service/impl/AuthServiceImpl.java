@@ -5,10 +5,13 @@ import com.shuishu.demo.security.common.config.exception.BusinessException;
 import com.shuishu.demo.security.common.config.security.token.EmailAuthenticationToken;
 import com.shuishu.demo.security.common.config.security.token.LocalAuthenticationToken;
 import com.shuishu.demo.security.common.config.security.token.PhoneAuthenticationToken;
+import com.shuishu.demo.security.common.utils.TokenUtils;
 import com.shuishu.demo.security.entity.vo.UserInfoVo;
 import com.shuishu.demo.security.enums.UserEnum;
 import com.shuishu.demo.security.service.AuthService;
 import jakarta.annotation.Resource;
+import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
@@ -22,12 +25,14 @@ import org.springframework.stereotype.Service;
  * @description ：
  */
 @Service
+@RequiredArgsConstructor
 public class AuthServiceImpl implements AuthService {
-    @Resource
-    private AuthenticationManager authenticationManager;
+    private final AuthenticationManager authenticationManager;
+    private final TokenUtils tokenUtils;
+
 
     @Override
-    public UserInfoVo login(String name, String pwd, UserEnum.AuthType authType) {
+    public UserInfoVo login(String name, String pwd, UserEnum.AuthType authType, HttpServletResponse response) {
         Authentication authentication = null;
         if (UserEnum.AuthType.LOCAL.equals(authType)){
             authentication = authenticationManager.authenticate(new LocalAuthenticationToken(name, pwd));
@@ -41,7 +46,10 @@ public class AuthServiceImpl implements AuthService {
         UserInfoVo userInfoVO = (UserInfoVo) authentication.getPrincipal();
 
         // 生成token，或者在provider中生成
-
+        if (userInfoVO != null && !tokenUtils.setUserInfoVo(userInfoVO, response)){
+            throw new BusinessException(401, "登录失败");
+        }
         return userInfoVO;
     }
+
 }

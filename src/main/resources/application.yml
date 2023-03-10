@@ -54,7 +54,7 @@ spring:
     #  redis
     redis:
       host: 127.0.0.1
-      password: 123
+      password: 123456
       port: 6379
   # 邮件发送配置
   mail:

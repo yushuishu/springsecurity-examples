@@ -3,6 +3,7 @@ package com.shuishu.demo.security.service;
 
 import com.shuishu.demo.security.entity.vo.UserInfoVo;
 import com.shuishu.demo.security.enums.UserEnum;
+import jakarta.servlet.http.HttpServletResponse;
 
 /**
  * @author ：谁书-ss
@@ -22,5 +23,5 @@ public interface AuthService {
      * @param authType -
      * @return -
      */
-    UserInfoVo login(String name, String pwd, UserEnum.AuthType authType);
+    UserInfoVo login(String name, String pwd, UserEnum.AuthType authType, HttpServletResponse response);
 }

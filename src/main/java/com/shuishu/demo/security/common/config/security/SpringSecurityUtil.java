@@ -13,8 +13,13 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
+import org.springframework.util.StringUtils;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author ：谁书-ss
@@ -34,6 +39,27 @@ public class SpringSecurityUtil {
     public static final String LOGIN_PASSWORD_KEY = "userAuthCredential";
     public static final String LOGIN_CAPTCHA= "captcha";
 
+
+    public static String[] ignoreUrlArray(){
+        return new String[]{
+                "/api/shuishu/demo/doc.html",
+                "/api/shuishu/demo/webjars/**",
+                "/api/shuishu/demo/v3/api-docs/**",
+                //yml配置文件有访问前缀，所以SpringSecurity这里是不能加前缀的
+                "/auth/**",
+                //过滤器判断使用
+                "/api/shuishu/demo/auth/**"
+        };
+    }
+
+    public static boolean existsInIgnoreUrlArray(String requestUri){
+        for (String ignoreUrl : ignoreUrlArray()) {
+            if (requestUri.contains(ignoreUrl.replace("/**", ""))){
+                return true;
+            }
+        }
+        return false;
+    }
 
     /**
      * 登录

@@ -8,6 +8,7 @@ import com.shuishu.demo.security.entity.vo.UserInfoVo;
 import com.shuishu.demo.security.enums.UserEnum;
 import com.shuishu.demo.security.service.AuthService;
 import jakarta.annotation.Resource;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -25,22 +26,22 @@ public class AuthController {
     private AuthService authService;
 
     @PostMapping("local")
-    public ApiResponse<UserInfoVo> local(@RequestBody UserLoginDto userLoginDTO){
+    public ApiResponse<UserInfoVo> local(@RequestBody UserLoginDto userLoginDTO, HttpServletResponse response){
         System.out.println("登录----------- local");
-        return ApiResponse.of(authService.login(userLoginDTO.getUsername(), userLoginDTO.getPassword(), UserEnum.AuthType.LOCAL));
+        return ApiResponse.of(authService.login(userLoginDTO.getUsername(), userLoginDTO.getPassword(), UserEnum.AuthType.LOCAL, response));
     }
 
     @PostMapping("email")
-    public ApiResponse<UserInfoVo> email(@RequestBody UserLoginDto userLoginDTO){
+    public ApiResponse<UserInfoVo> email(@RequestBody UserLoginDto userLoginDTO, HttpServletResponse response){
         System.out.println("登录----------- email");
-        return ApiResponse.of(authService.login(userLoginDTO.getUsername(), userLoginDTO.getPassword(), UserEnum.AuthType.EMAIL));
+        return ApiResponse.of(authService.login(userLoginDTO.getUsername(), userLoginDTO.getPassword(), UserEnum.AuthType.EMAIL, response));
     }
 
     @PostMapping("phone")
-    public ApiResponse<UserInfoVo> phone(@RequestBody UserLoginDto userLoginDTO){
+    public ApiResponse<UserInfoVo> phone(@RequestBody UserLoginDto userLoginDTO, HttpServletResponse response){
         System.out.println("登录----------- phone");
         SpringSecurityUtil.login(userLoginDTO.getUsername(), userLoginDTO.getPassword(), UserEnum.AuthType.LOCAL);
-        return ApiResponse.of(authService.login(userLoginDTO.getUsername(), userLoginDTO.getPassword(), UserEnum.AuthType.PHONE));
+        return ApiResponse.of(authService.login(userLoginDTO.getUsername(), userLoginDTO.getPassword(), UserEnum.AuthType.PHONE, response));
     }
 
 

@@ -1,16 +1,28 @@
 package com.shuishu.demo.security.common.config.security.filter;
 
 
+import com.shuishu.demo.security.common.config.domain.ApiResponse;
+import com.shuishu.demo.security.common.config.security.SpringSecurityUtil;
+import com.shuishu.demo.security.common.config.security.token.LocalAuthenticationToken;
+import com.shuishu.demo.security.common.utils.ResponseUtils;
+import com.shuishu.demo.security.common.utils.TokenUtils;
+import com.shuishu.demo.security.entity.vo.UserInfoVo;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.lang.NonNull;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
+import org.springframework.web.util.ContentCachingRequestWrapper;
 
 import java.io.IOException;
 
@@ -46,6 +58,8 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class LocalLoginFilter extends OncePerRequestFilter {
 
+    private final TokenUtils tokenUtils;
+    private final AuthenticationManager authenticationManager;
 
     @Override
     protected void doFilterInternal(
@@ -54,41 +68,33 @@ public class LocalLoginFilter extends OncePerRequestFilter {
             @NonNull FilterChain filterChain
     ) throws ServletException, IOException {
         log.info("【LocalLoginFilter 过滤器】执行doFilterInternal()方法");
+        ContentCachingRequestWrapper contentCachingRequestWrapper = new ContentCachingRequestWrapper(request);
         // 获取URI
-        String requestURI = request.getRequestURI();
-        // 获取token
-        final String authToken = request.getHeader("token");
-        if (!StringUtils.hasText(authToken)){
+        String requestUri = request.getRequestURI();
+        if (SpringSecurityUtil.LOGIN_URL_LOCAL.contains(requestUri) && !HttpMethod.POST.matches(request.getMethod())){
+            ResponseUtils.responseJson(response,new ApiResponse<>(HttpStatus.UNAUTHORIZED.value(), "不支持的请求方式"));
+            return;
+        }
+        // 获取用户信息
+        UserInfoVo userInfoVo = tokenUtils.getUserInfoVo(request, response);
+        // 忽略URL
+        if (SpringSecurityUtil.existsInIgnoreUrlArray(requestUri)){
             filterChain.doFilter(request, response);
             return;
         }
-        // Redis 获取token 的 用户信息，过期时间
-
-
+        // 需要认证的URL，token过期无效
+        if (userInfoVo == null){
+            ResponseUtils.responseJson(response,new ApiResponse<>(HttpStatus.UNAUTHORIZED.value(), "请先登录，再访问资源"));
+            return;
+        }
+        // 用户信息放到上下文
+        if (SecurityContextHolder.getContext().getAuthentication() == null) {
+            LocalAuthenticationToken localAuthenticationToken = new LocalAuthenticationToken(userInfoVo.getUserAuthIdentifier(), null, userInfoVo.getAuthorities());
+            localAuthenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+            SecurityContextHolder.getContext().setAuthentication(localAuthenticationToken);
+        }
         filterChain.doFilter(request, response);
     }
-
-    /*public LocalLoginFilter() {
-        // 登录路径，方式、认证管理器
-        super(new AntPathRequestMatcher(SpringSecurityUtil.LOGIN_URL_LOCAL, RequestMethod.POST.name()));
-        log.info("【LocalLoginFilter 过滤器】执行LocalLoginFilter()方法");
-        // 认证成功
-        //setAuthenticationSuccessHandler(myAuthenticationHandler);
-        //// 认证失败
-        //setAuthenticationFailureHandler(myAuthenticationHandler);
-    }*/
-
-    /*@Override
-    public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
-        log.info("【LocalLoginFilter 过滤器】执行attemptAuthentication()方法");
-        String userAuthIdentifier = request.getParameter(SpringSecurityUtil.LOGIN_USERNAME_KEY);
-        userAuthIdentifier = StringUtils.hasText(userAuthIdentifier) ? userAuthIdentifier.trim() : "";
-        String userAuthCredential = request.getParameter(SpringSecurityUtil.LOGIN_PASSWORD_KEY);
-        userAuthCredential = StringUtils.hasText(userAuthCredential) ? userAuthCredential.trim() : "";
-        LocalAuthenticationToken localAuthenticationToken = new LocalAuthenticationToken(userAuthIdentifier, userAuthCredential);
-        localAuthenticationToken.setDetails(authenticationDetailsSource.buildDetails(request));
-        return getAuthenticationManager().authenticate(localAuthenticationToken);
-    }*/
 
 }
 

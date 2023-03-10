@@ -46,26 +46,5 @@ public class EmailLoginFilter extends OncePerRequestFilter {
         filterChain.doFilter(request, response);
     }
 
-    //public EmailLoginFilter() {
-    //    // 登录路径，方式、认证管理器
-    //    super(new AntPathRequestMatcher(SpringSecurityUtil.LOGIN_URL_EMAIL, RequestMethod.POST.name()));
-    //    log.info("【EmailLoginFilter 过滤器】执行EmailLoginFilter()方法");
-    //    // 认证成功
-    //    //setAuthenticationSuccessHandler(myAuthenticationHandler);
-    //    //// 认证失败
-    //    //setAuthenticationFailureHandler(myAuthenticationHandler);
-    //}
-
-    //@Override
-    //public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException, IOException, ServletException {
-    //    log.info("【EmailLoginFilter 过滤器】执行attemptAuthentication()方法");
-    //    String userAuthIdentifier = request.getParameter(SpringSecurityUtil.LOGIN_USERNAME_KEY);
-    //    userAuthIdentifier = StringUtils.hasText(userAuthIdentifier) ? userAuthIdentifier.trim() : "";
-    //    String userAuthCredential = request.getParameter(SpringSecurityUtil.LOGIN_PASSWORD_KEY);
-    //    userAuthCredential = StringUtils.hasText(userAuthCredential) ? userAuthCredential.trim() : "";
-    //    EmailAuthenticationToken emailAuthenticationToken = new EmailAuthenticationToken(userAuthIdentifier, userAuthCredential);
-    //    emailAuthenticationToken.setDetails(authenticationDetailsSource.buildDetails(request));
-    //    return getAuthenticationManager().authenticate(emailAuthenticationToken);
-    //}
 
 }
