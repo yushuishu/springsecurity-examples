@@ -29,7 +29,7 @@ spring:
   datasource:
     url: jdbc:postgresql://127.0.0.1:5432/spring_security_examples?useUnicode=true&characterEncoding=utf8
     username: postgres
-    password: 123
+    password: 123456
     driver-class-name: org.postgresql.Driver
     type: com.zaxxer.hikari.HikariDataSource
     hikari:
@@ -56,6 +56,16 @@ spring:
       host: 127.0.0.1
       password: 123456
       port: 6379
+      database: 0
+      connect-timeout: 3000
+      lettuce:
+        pool:
+          enabled: true
+          max-active: 8
+          max-wait: -1
+          max-idle: 8
+          min-idle: 0
+        shutdown-timeout: 3000
   # 邮件发送配置
   mail:
     default-encoding: utf-8

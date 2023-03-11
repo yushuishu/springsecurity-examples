@@ -1,13 +1,13 @@
 package com.shuishu.demo.security.common.config.security;
 
 
+import com.shuishu.demo.security.common.config.security.authorization.DynamicAuthorizationManager;
 import com.shuishu.demo.security.common.config.security.filter.EmailLoginFilter;
 import com.shuishu.demo.security.common.config.security.filter.LocalLoginFilter;
 import com.shuishu.demo.security.common.config.security.filter.PhoneLoginFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -32,11 +32,10 @@ import javax.sql.DataSource;
 public class SpringSecurityConfig {
 
     private final GlobalAuthenticationHandler globalAuthenticationHandler;
-    private final AuthenticationManager authenticationManager;
     private final LocalLoginFilter localLoginFilter;
     private final EmailLoginFilter emailLoginFilter;
     private final PhoneLoginFilter phoneLoginFilter;
-
+    private final DynamicAuthorizationManager dynamicAuthorizationManager;
 
     /**
      * 自定义RememberMe服务token持久化仓库
@@ -61,7 +60,8 @@ public class SpringSecurityConfig {
         // http.antMatcher()不再可用，并被替换为 http.securityMatcher() 或 httpSecurity.requestMatchers()
         httpSecurity.authorizeHttpRequests()
                 .requestMatchers(SpringSecurityUtils.ignoreUrlArray()).permitAll()
-                .anyRequest().authenticated();
+                .anyRequest()
+                .access(dynamicAuthorizationManager);
 
         httpSecurity
                 .formLogin().disable()

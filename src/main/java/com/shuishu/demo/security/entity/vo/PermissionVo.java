@@ -36,6 +36,8 @@ public class PermissionVo extends BaseVO<Permission> {
 
     private String permissionDescription;
 
+    private Boolean isNeedAuthorization;
+
     private Long permissionParentId;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")

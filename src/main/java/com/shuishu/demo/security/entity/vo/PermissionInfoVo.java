@@ -40,6 +40,10 @@ public class PermissionInfoVo extends BaseVO<Permission> {
      */
     private String permissionDescription;
     /**
+     * 权限是否需要授权：true：授权 false：放开
+     */
+    private Boolean isNeedAuthorization;
+    /**
      * 父级权限id（权限分类）
      */
     private Long permissionParentId;

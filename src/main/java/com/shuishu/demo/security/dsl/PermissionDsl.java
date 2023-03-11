@@ -1,12 +1,19 @@
 package com.shuishu.demo.security.dsl;
 
 
+import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.group.GroupBy;
 import com.querydsl.core.types.Projections;
 import com.shuishu.demo.security.common.config.jdbc.BaseDsl;
+import com.shuishu.demo.security.entity.dto.PermissionCacheDto;
+import com.shuishu.demo.security.entity.dto.RoleCacheDto;
 import com.shuishu.demo.security.entity.po.QPermission;
+import com.shuishu.demo.security.entity.po.QRole;
 import com.shuishu.demo.security.entity.po.QRolePermission;
 import com.shuishu.demo.security.entity.vo.PermissionInfoVo;
+import jakarta.annotation.Nonnull;
 import org.springframework.stereotype.Component;
+import org.springframework.util.ObjectUtils;
 
 import java.util.List;
 
@@ -20,8 +27,9 @@ import java.util.List;
  */
 @Component
 public class PermissionDsl extends BaseDsl {
-    private final QPermission qPermission = QPermission.permission;
-    private final QRolePermission qRolePermission = QRolePermission.rolePermission;
+    final QPermission qPermission = QPermission.permission;
+    final QRolePermission qRolePermission = QRolePermission.rolePermission;
+    final QRole qRole = QRole.role;
 
     public List<PermissionInfoVo> findPermissionInfoByRoleIdList(List<Long> roleIdList) {
         return jpaQueryFactory.select(Projections.fields(PermissionInfoVo.class,
@@ -37,5 +45,28 @@ public class PermissionDsl extends BaseDsl {
                 .leftJoin(qPermission).on(qRolePermission.permissionId.eq(qPermission.permissionId))
                 .where(qRolePermission.roleId.in(roleIdList))
                 .fetch();
+    }
+
+
+    public List<PermissionCacheDto> findCachePermissionList() {
+        return jpaQueryFactory.select(Projections.fields(PermissionCacheDto.class,
+                qRole.roleCode,
+                qPermission.permissionCode,
+                qPermission.permissionUrl,
+                qPermission.isNeedAuthorization
+        ))
+                .from(qRole)
+                .innerJoin(qRolePermission).on(qRole.roleId.eq(qRolePermission.roleId))
+                .innerJoin(qPermission).on(qPermission.permissionId.eq(qRolePermission.permissionId))
+                .transform(GroupBy.groupBy(qPermission).list(
+                        Projections.fields(PermissionCacheDto.class,
+                                qPermission.permissionUrl,
+                                qPermission.permissionCode,
+                                qPermission.isNeedAuthorization,
+                                GroupBy.list(Projections.fields(RoleCacheDto.class,
+                                        qRole.roleCode
+                                )).as("roleCacheDtoList")
+                        )
+                ));
     }
 }

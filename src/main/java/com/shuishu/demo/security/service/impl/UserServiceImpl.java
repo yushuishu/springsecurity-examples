@@ -13,6 +13,7 @@ import com.shuishu.demo.security.repository.UserAuthRepository;
 import com.shuishu.demo.security.repository.UserRepository;
 import com.shuishu.demo.security.service.UserService;
 import jakarta.annotation.Resource;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,17 +31,13 @@ import java.util.List;
  */
 @Service
 @Transactional(rollbackFor = RuntimeException.class)
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
-    @Resource
-    private UserAuthRepository userAuthRepository;
-    @Resource
-    private UserAuthDsl userAuthDsl;
-    @Resource
-    private UserRepository userRepository;
-    @Resource
-    private RoleDsl roleDsl;
-    @Resource
-    private PermissionDsl permissionDsl;
+    private final UserAuthRepository userAuthRepository;
+    private final UserAuthDsl userAuthDsl;
+    private final UserRepository userRepository;
+    private final RoleDsl roleDsl;
+    private final PermissionDsl permissionDsl;
 
     @Override
     public UserInfoVo findByUserAuthIdentifier(String userAuthIdentifier, String authType) {

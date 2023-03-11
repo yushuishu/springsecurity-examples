@@ -86,29 +86,7 @@ public class TokenUtils {
         UserInfoVo userInfoVo = null;
         String headerAuthToken = request.getHeader(ymlAuthToken);
         if (StringUtils.hasText(headerAuthToken)) {
-            Object userInfoObjForAuthToken = redisUtils.strGet(headerAuthToken);
-            if (userInfoObjForAuthToken == null) {
-                // 尝试获取刷新 token
-                String headerRefreshToken = request.getHeader(ymlRefreshToken);
-                if (StringUtils.hasText(headerRefreshToken)) {
-                    Object userInfoObjForRefreshToken = redisUtils.strGet(headerRefreshToken);
-                    if (userInfoObjForRefreshToken == null) {
-                        return null;
-                    }
-                    userInfoVo = (UserInfoVo) userInfoObjForRefreshToken;
-                    redisUtils.strSet(headerAuthToken, userInfoVo, ymlExpireTime);
-                    return userInfoVo;
-                }
-                return null;
-            } else {
-                userInfoVo = (UserInfoVo) userInfoObjForAuthToken;
-                long expire = redisUtils.getExpire(headerAuthToken);
-                if (expire < ymlSurplusRefreshTime) {
-                    // 刷新token
-                    redisUtils.strSet(headerAuthToken, userInfoVo, ymlExpireTime);
-                }
-                return userInfoVo;
-            }
+            return getUserInfoVo(request, headerAuthToken);
         } else {
             // 请求头没有 AuthToken 只有 RefreshToken 也尽最大可能的尝试获取用户信息，创建新的 token，进行缓存
             String headerRefreshToken = request.getHeader(ymlRefreshToken);
@@ -121,6 +99,54 @@ public class TokenUtils {
                 String newAuthToken = createToken();
                 redisUtils.strSet(newAuthToken, userInfoVo, ymlExpireTime);
                 response.setHeader(ymlAuthToken, newAuthToken);
+                return userInfoVo;
+            }
+            return null;
+        }
+    }
+
+    private UserInfoVo getUserInfoVo(HttpServletRequest request, String headerAuthToken){
+        UserInfoVo userInfoVo = null;
+        Object userInfoObjForAuthToken = redisUtils.strGet(headerAuthToken);
+        if (userInfoObjForAuthToken == null) {
+            // 尝试获取刷新 token
+            String headerRefreshToken = request.getHeader(ymlRefreshToken);
+            if (StringUtils.hasText(headerRefreshToken)) {
+                Object userInfoObjForRefreshToken = redisUtils.strGet(headerRefreshToken);
+                if (userInfoObjForRefreshToken == null) {
+                    return null;
+                }
+                userInfoVo = (UserInfoVo) userInfoObjForRefreshToken;
+                redisUtils.strSet(headerAuthToken, userInfoVo, ymlExpireTime);
+                return userInfoVo;
+            }
+            return null;
+        } else {
+            userInfoVo = (UserInfoVo) userInfoObjForAuthToken;
+            long expire = redisUtils.getExpire(headerAuthToken);
+            if (expire < ymlSurplusRefreshTime) {
+                // 刷新token
+                redisUtils.strSet(headerAuthToken, userInfoVo, ymlExpireTime);
+            }
+            return userInfoVo;
+        }
+    }
+
+    public UserInfoVo getUserInfoVo(HttpServletRequest request) {
+        UserInfoVo userInfoVo = null;
+        String headerAuthToken = request.getHeader(ymlAuthToken);
+        if (StringUtils.hasText(headerAuthToken)) {
+            return getUserInfoVo(request, headerAuthToken);
+        } else {
+            // 请求头没有 AuthToken 只有 RefreshToken 也尽最大可能的尝试获取用户信息，创建新的 token，进行缓存
+            String headerRefreshToken = request.getHeader(ymlRefreshToken);
+            if (StringUtils.hasText(headerRefreshToken)) {
+                Object userInfoObjForRefreshToken = redisUtils.strGet(headerRefreshToken);
+                if (userInfoObjForRefreshToken == null) {
+                    return null;
+                }
+                // 重载方法，参数没有HttpServletResponse，所以不创建Token和缓存
+                userInfoVo = (UserInfoVo) userInfoObjForRefreshToken;
                 return userInfoVo;
             }
             return null;

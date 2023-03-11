@@ -108,7 +108,7 @@ public class UserInfoVo implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Set<SimpleGrantedAuthority> authorities = new HashSet<>();
-        this.permissionInfoList.forEach(t -> authorities.add(new SimpleGrantedAuthority(t.getPermissionCode())));
+        this.permissionInfoList.forEach(t -> authorities.add(new SimpleGrantedAuthority(t.getPermissionUrl())));
         return authorities;
     }
 

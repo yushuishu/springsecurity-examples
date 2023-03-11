@@ -7,8 +7,8 @@ import com.shuishu.demo.security.entity.dto.UserLoginDto;
 import com.shuishu.demo.security.entity.vo.UserInfoVo;
 import com.shuishu.demo.security.enums.UserEnum;
 import com.shuishu.demo.security.service.AuthService;
-import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -21,9 +21,9 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("auth")
+@RequiredArgsConstructor
 public class AuthController {
-    @Resource
-    private AuthService authService;
+    private final AuthService authService;
 
     @PostMapping("local")
     public ApiResponse<UserInfoVo> local(@RequestBody UserLoginDto userLoginDTO, HttpServletResponse response){

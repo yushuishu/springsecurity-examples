@@ -56,7 +56,7 @@ public class GlobalAuthenticationHandler implements AuthenticationSuccessHandler
      */
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
-        log.info("认证成功：{}", authentication.getPrincipal());
+        log.info("登录成功：{}", authentication.getPrincipal());
         // 清理使用过的验证码 (Redis)
 
         // 生成token

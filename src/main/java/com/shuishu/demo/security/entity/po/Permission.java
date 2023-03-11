@@ -46,6 +46,9 @@ public class Permission extends BasePO {
     @Comment("权限描述")
     private String permissionDescription;
 
+    @Comment("权限是否需要授权：true：授权 false：放开")
+    private Boolean isNeedAuthorization;
+
     @Comment("父级权限id（权限分类）")
     private Long permissionParentId;
 
