@@ -142,46 +142,37 @@ public class AuthenticationConfig {
 
     @Bean
     public UserDetailsService localUserDetailsService() {
-        return new UserDetailsService() {
-            @Override
-            public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-                log.info("【LocalUserDetailsServiceImpl 认证】执行loadUserByUsername() 方法，获取账号：" + username);
-                UserInfoVo userInfoVO = userService.findByUserAuthIdentifier(username, UserEnum.AuthType.LOCAL.getType());
-                if (userInfoVO == null) {
-                    throw new UsernameNotFoundException("用户不存在");
-                }
-                return userInfoVO;
+        return username -> {
+            log.info("【LocalUserDetailsServiceImpl 认证】执行loadUserByUsername() 方法，获取账号：" + username);
+            UserInfoVo userInfoVO = userService.findByUserAuthIdentifier(username, UserEnum.AuthType.LOCAL.getType());
+            if (userInfoVO == null) {
+                throw new UsernameNotFoundException("用户不存在");
             }
+            return userInfoVO;
         };
     }
 
     @Bean
     public UserDetailsService emailUserDetailsService() {
-        return new UserDetailsService() {
-            @Override
-            public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-                log.info("【EmailUserDetailsServiceImpl 认证】执行loadUserByUsername() 方法，获取账号：" + username);
-                UserInfoVo userInfoVO = userService.findByUserAuthIdentifier(username, UserEnum.AuthType.EMAIL.getType());
-                if (userInfoVO == null) {
-                    throw new UsernameNotFoundException("用户不存在");
-                }
-                return userInfoVO;
+        return username -> {
+            log.info("【EmailUserDetailsServiceImpl 认证】执行loadUserByUsername() 方法，获取账号：" + username);
+            UserInfoVo userInfoVO = userService.findByUserAuthIdentifier(username, UserEnum.AuthType.EMAIL.getType());
+            if (userInfoVO == null) {
+                throw new UsernameNotFoundException("用户不存在");
             }
+            return userInfoVO;
         };
     }
 
     @Bean
     public UserDetailsService phoneUserDetailsService() {
-        return new UserDetailsService() {
-            @Override
-            public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-                log.info("【PhoneUserDetailsServiceImpl 认证】执行loadUserByUsername() 方法，获取账号：" + username);
-                UserInfoVo userInfoVO = userService.findByUserAuthIdentifier(username, UserEnum.AuthType.PHONE.getType());
-                if (userInfoVO == null) {
-                    throw new UsernameNotFoundException("用户不存在");
-                }
-                return userInfoVO;
+        return username -> {
+            log.info("【PhoneUserDetailsServiceImpl 认证】执行loadUserByUsername() 方法，获取账号：" + username);
+            UserInfoVo userInfoVO = userService.findByUserAuthIdentifier(username, UserEnum.AuthType.PHONE.getType());
+            if (userInfoVO == null) {
+                throw new UsernameNotFoundException("用户不存在");
             }
+            return userInfoVO;
         };
     }
 
