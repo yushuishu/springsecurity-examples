@@ -154,4 +154,12 @@ public class TokenUtils {
     }
 
 
+    public boolean hasToken(HttpServletRequest request){
+        String headerAuthToken = request.getHeader(ymlAuthToken);
+        if (StringUtils.hasText(headerAuthToken)){
+            return redisUtils.hasKey(headerAuthToken);
+        }
+        return false;
+    }
+
 }

@@ -32,10 +32,10 @@ import org.springframework.stereotype.Component;
  * 将返回结果写入到response
  * <p>
  * 接口：
- * AuthenticationSuccessHandler         ：认证成功
+ * AuthenticationSuccessHandler         ：认证成功 （自定登录接口，json的方式，实现此接口的方法是无效的）
  * AuthenticationFailureHandler         ：认证失败
- * LogoutSuccessHandler                 ：退出登录成功
- * SessionInformationExpiredStrategy    ：会话过期
+ * LogoutSuccessHandler                 ：退出登录成功（自定注销登录接口，实现此接口的方法是无效的）
+ * SessionInformationExpiredStrategy    ：会话过期 （token认证，实现此接口的方法是无效的）
  * AccessDeniedHandler                  ：验证权限失败 403 (用来解决认证过的用户访问无权限资源时的异常)
  * AuthenticationEntryPoint             ：匿名用户访问无权限资源时的异常，
  */
@@ -57,11 +57,6 @@ public class GlobalAuthenticationHandler implements AuthenticationSuccessHandler
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
         log.info("登录成功：{}", authentication.getPrincipal());
-        // 清理使用过的验证码 (Redis)
-
-        // 生成token
-
-
         ResponseUtils.responseJson(response, ApiResponse.of(HttpStatus.OK.value(), "登录成功"));
     }
 

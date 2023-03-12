@@ -2,6 +2,7 @@ package com.shuishu.demo.security.entity.vo;
 
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -53,13 +54,13 @@ public class UserInfoVo implements UserDetails {
      */
     private String userJob;
     /**
-     * 用户过期 true：没有过期  false：过期
+     * 用户过期true：没有过期  false：过期
      */
-    private Boolean isAccountNonExpired;
+    private Boolean userIsAccountNonExpired;
     /**
-     * 用户锁定 true：没有锁定  false：被锁定
+     * 用户锁定true：没有锁定  false：被锁定
      */
-    private Boolean isAccountNonLocked;
+    private Boolean userIsAccountNonLocked;
     /**
      * 最后一次登录时间
      */
@@ -81,6 +82,7 @@ public class UserInfoVo implements UserDetails {
     /**
      * 凭证信息
      */
+    @JsonIgnore
     private String userAuthCredential;
     /**
      * 刷新token
@@ -104,7 +106,7 @@ public class UserInfoVo implements UserDetails {
     private List<PermissionInfoVo> permissionInfoList;
 
 
-
+    @JsonIgnore
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Set<SimpleGrantedAuthority> authorities = new HashSet<>();
@@ -112,33 +114,41 @@ public class UserInfoVo implements UserDetails {
         return authorities;
     }
 
+    @JsonIgnore
     @Override
     public String getPassword() {
-        return userAuthCredential;
+        return this.userAuthCredential;
     }
 
+    @JsonIgnore
     @Override
     public String getUsername() {
-        return userAuthIdentifier;
+        return this.userAuthIdentifier;
     }
 
+    @JsonIgnore
     @Override
     public boolean isAccountNonExpired() {
-        return isAccountNonExpired;
+        return this.userIsAccountNonExpired;
     }
 
+    @JsonIgnore
     @Override
     public boolean isAccountNonLocked() {
-        return isAccountNonLocked;
+        return this.userIsAccountNonLocked;
     }
 
+    @JsonIgnore
     @Override
     public boolean isCredentialsNonExpired() {
         return true;
     }
 
+    @JsonIgnore
     @Override
     public boolean isEnabled() {
         return true;
     }
+
+
 }

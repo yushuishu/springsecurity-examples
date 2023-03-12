@@ -53,13 +53,13 @@ public class UserVo extends BaseVO<User> {
      */
     private String userJob;
     /**
-     * 用户是否过期
+     * 用户过期true：没有过期  false：过期
      */
-    private Boolean userExpired;
+    private Boolean userIsAccountNonExpired;
     /**
-     * 用户是被锁定
+     * 用户锁定true：没有锁定  false：被锁定
      */
-    private Boolean userLocked;
+    private Boolean userIsAccountNonLocked;
     /**
      * 最后一次登录时间
      */

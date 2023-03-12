@@ -2,9 +2,7 @@ package com.shuishu.demo.security.common.config.security;
 
 
 import com.shuishu.demo.security.common.config.security.authorization.DynamicAuthorizationManager;
-import com.shuishu.demo.security.common.config.security.filter.EmailLoginFilter;
-import com.shuishu.demo.security.common.config.security.filter.LocalLoginFilter;
-import com.shuishu.demo.security.common.config.security.filter.PhoneLoginFilter;
+import com.shuishu.demo.security.common.config.security.filter.LoginFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -32,10 +30,15 @@ import javax.sql.DataSource;
 public class SpringSecurityConfig {
 
     private final GlobalAuthenticationHandler globalAuthenticationHandler;
-    private final LocalLoginFilter localLoginFilter;
-    private final EmailLoginFilter emailLoginFilter;
-    private final PhoneLoginFilter phoneLoginFilter;
+    /**
+     * 不同的登录类型，可以创建不同类型的过滤器分别处理，
+     * 也可以只创建一个 Filter：LoginFilter，然后根据不同类型的登录url，来创建不同的 Token
+     */
+    //private final LocalLoginFilter localLoginFilter;
+    //private final EmailLoginFilter emailLoginFilter;
+    //private final PhoneLoginFilter phoneLoginFilter;
     private final DynamicAuthorizationManager dynamicAuthorizationManager;
+    private final LoginFilter loginFilter;
 
     /**
      * 自定义RememberMe服务token持久化仓库
@@ -58,6 +61,8 @@ public class SpringSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         // 路径配置 （authorizeRequests 方法已废弃，取而代之的是 authorizeHttpRequests）
         // http.antMatcher()不再可用，并被替换为 http.securityMatcher() 或 httpSecurity.requestMatchers()
+        // SpringSecurityUtils.ignoreUrlArray() 可以只配置注册登录相关页面，其它所有权限放到数据库，
+        // 通过 dynamicAuthorizationManager 动态权限决策管理器，来动态管理
         httpSecurity.authorizeHttpRequests()
                 .requestMatchers(SpringSecurityUtils.ignoreUrlArray()).permitAll()
                 .anyRequest()
@@ -65,9 +70,10 @@ public class SpringSecurityConfig {
 
         httpSecurity
                 .formLogin().disable()
-                .addFilterBefore(localLoginFilter, UsernamePasswordAuthenticationFilter.class)
-                .addFilterBefore(emailLoginFilter, UsernamePasswordAuthenticationFilter.class)
-                .addFilterBefore(phoneLoginFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(loginFilter, UsernamePasswordAuthenticationFilter.class)
+                //.addFilterBefore(localLoginFilter, UsernamePasswordAuthenticationFilter.class)
+                //.addFilterBefore(emailLoginFilter, UsernamePasswordAuthenticationFilter.class)
+                //.addFilterBefore(phoneLoginFilter, UsernamePasswordAuthenticationFilter.class)
                 .logout()
                 .logoutUrl(SpringSecurityUtils.LOGOUT_URL)
                 .logoutSuccessHandler(globalAuthenticationHandler)

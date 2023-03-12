@@ -49,6 +49,7 @@ public class UserAuth extends BasePO {
     @Comment("授权类型")
     private String userAuthType;
     @Comment("登录号：唯一识别码")
+    @Column(nullable = false, unique = true)
     private String userAuthIdentifier;
     @Comment("凭证信息")
     private String userAuthCredential;

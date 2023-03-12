@@ -40,6 +40,7 @@ public class User extends BasePO {
     @Comment(value = "用户id")
     private Long userId;
     @Comment("昵称")
+    @Column(nullable = false, unique = true)
     private String nickname;
     @Comment("个人简介")
     private String userAbout;
@@ -50,11 +51,11 @@ public class User extends BasePO {
     @Comment("职业")
     private String userJob;
     @Comment("用户过期true：没有过期  false：过期")
-    private Boolean isAccountNonExpired;
+    private Boolean userIsAccountNonExpired;
     @Comment("用户锁定true：没有锁定  false：被锁定")
-    private Boolean isAccountNonLocked;
+    private Boolean userIsAccountNonLocked;
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Comment("最后一次登录时间")
-    private Date userAuthLastLoginDate;
+    private Date userLastLoginDate;
 }

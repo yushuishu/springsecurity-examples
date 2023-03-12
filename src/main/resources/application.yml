@@ -58,14 +58,14 @@ spring:
       port: 6379
       database: 0
       connect-timeout: 3000
-      lettuce:
-        pool:
-          enabled: true
-          max-active: 8
-          max-wait: -1
-          max-idle: 8
-          min-idle: 0
-        shutdown-timeout: 3000
+#      lettuce:
+#        pool:
+#          enabled: true
+#          max-active: 8
+#          max-wait: -1
+#          max-idle: 8
+#          min-idle: 0
+#        shutdown-timeout: 3000
   # 邮件发送配置
   mail:
     default-encoding: utf-8

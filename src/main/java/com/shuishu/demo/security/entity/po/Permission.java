@@ -38,15 +38,19 @@ public class Permission extends BasePO {
     private Long permissionId;
 
     @Comment("权限code")
+    @Column(nullable = false, unique = true)
     private String permissionCode;
 
     @Comment("权限url")
+    @Column(nullable = false, unique = true)
     private String permissionUrl;
 
     @Comment("权限描述")
+    @Column(nullable = false)
     private String permissionDescription;
 
-    @Comment("权限是否需要授权：true：授权 false：放开")
+    @Comment("权限是否需要授权：true：授权 false：开放")
+    @Column(nullable = false)
     private Boolean isNeedAuthorization;
 
     @Comment("父级权限id（权限分类）")

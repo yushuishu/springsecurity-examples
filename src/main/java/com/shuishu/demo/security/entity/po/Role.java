@@ -38,9 +38,11 @@ public class Role extends BasePO {
     private Long roleId;
 
     @Comment("角色名称")
+    @Column(nullable = false)
     private String roleName;
 
     @Comment("角色code")
+    @Column(nullable = false, unique = true)
     private String roleCode;
 
 }

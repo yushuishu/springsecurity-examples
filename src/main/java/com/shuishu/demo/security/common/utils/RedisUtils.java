@@ -71,7 +71,7 @@ public class RedisUtils {
      */
     public boolean hasKey(@NotBlank(message = "key不能为空") String key) {
         try {
-            return redisTemplate.hasKey(key);
+            return Boolean.TRUE.equals(redisTemplate.hasKey(key));
         } catch (Exception e) {
             e.printStackTrace();
             return false;

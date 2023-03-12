@@ -1,6 +1,7 @@
 package com.shuishu.demo.security.common.config.jdbc;
 
 
+import com.querydsl.jpa.JPQLTemplates;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.shuishu.demo.security.common.config.id.IdGenerate;
 import jakarta.annotation.Resource;
@@ -35,6 +36,6 @@ public class JpaQueryConfiguration {
 
     @Bean
     public JPAQueryFactory jpaQueryFactory() {
-        return new JPAQueryFactory(entityManager);
+        return new JPAQueryFactory(JPQLTemplates.DEFAULT, entityManager);
     }
 }

@@ -40,12 +40,13 @@ public class DynamicAuthorizationManager implements AuthorizationManager<Request
 
     @Override
     public void verify(Supplier<Authentication> authentication, RequestAuthorizationContext requestAuthorizationContext) {
-
+        log.info("【DynamicAuthorizationManager 授权管理器】执行verify()方法");
         AuthorizationManager.super.verify(authentication, requestAuthorizationContext);
     }
 
     @Override
     public AuthorizationDecision check(Supplier<Authentication> authentication, RequestAuthorizationContext requestAuthorizationContext) {
+        log.info("【DynamicAuthorizationManager 授权管理器】执行check()方法");
         // 当前用户 或 系统权限信息 是空数据的时候，或者是有数据并且和当前用户权限匹配的情况下返回true
         boolean isGranted = false;
         // 当前用户的权限信息
