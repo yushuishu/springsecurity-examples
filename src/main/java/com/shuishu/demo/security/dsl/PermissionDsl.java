@@ -55,9 +55,9 @@ public class PermissionDsl extends BaseDsl {
                 qPermission.permissionUrl,
                 qPermission.isNeedAuthorization
         ))
-                .from(qRole)
-                .innerJoin(qRolePermission).on(qRole.roleId.eq(qRolePermission.roleId))
-                .innerJoin(qPermission).on(qPermission.permissionId.eq(qRolePermission.permissionId))
+                .from(qPermission)
+                .leftJoin(qRolePermission).on(qPermission.permissionId.eq(qRolePermission.permissionId))
+                .leftJoin(qRole).on(qRole.roleId.eq(qRolePermission.roleId))
                 .transform(GroupBy.groupBy(qPermission).list((
                         Projections.fields(PermissionCacheDto.class,
                                 qPermission.permissionUrl,

@@ -45,5 +45,9 @@ public class TestController {
         return ApiResponse.success("删除成功", "");
     }
 
+    @GetMapping("enable")
+    public ApiResponse<String> enable(){
+        return ApiResponse.success("开启关闭成功", "");
+    }
 
 }

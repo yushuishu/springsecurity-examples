@@ -8,7 +8,9 @@ import com.shuishu.demo.security.common.config.security.token.LocalAuthenticatio
 import com.shuishu.demo.security.common.config.security.token.PhoneAuthenticationToken;
 import com.shuishu.demo.security.common.utils.ResponseUtils;
 import com.shuishu.demo.security.common.utils.TokenUtils;
+import com.shuishu.demo.security.entity.dto.PermissionCacheDto;
 import com.shuishu.demo.security.entity.vo.UserInfoVo;
+import com.shuishu.demo.security.service.ResourceService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -24,6 +26,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.List;
 
 /**
  * @author ：谁书-ss
@@ -57,7 +60,7 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class LoginFilter  extends OncePerRequestFilter {
     private final TokenUtils tokenUtils;
-
+    private final ResourceService resourceService;
 
     @Override
     protected void doFilterInternal(
@@ -78,8 +81,16 @@ public class LoginFilter  extends OncePerRequestFilter {
         }
         // 获取用户信息
         UserInfoVo userInfoVo = tokenUtils.getUserInfoVo(request, response);
+
         // 忽略URL
-        if (SpringSecurityUtils.existsInIgnoreUrlArray(requestUri)) {
+        List<PermissionCacheDto> cachePermissionList = resourceService.findCachePermissionList();
+        List<String> isNotAuthorizationUrlList = cachePermissionList.stream()
+                .filter(t -> !Boolean.TRUE.equals(t.getIsNeedAuthorization()))
+                .map(PermissionCacheDto::getPermissionUrl)
+                .toList();
+        // SpringSecurityUtils.ignoreUrlArray() 可以只配置注册登录相关页面，其它所有权限放到数据库，
+        // 通过 dynamicAuthorizationManager 动态权限决策管理器，来动态管理
+        if (SpringSecurityUtils.existsInIgnoreUrlArray(requestUri) || isNotAuthorizationUrlList.contains(requestUri)) {
             filterChain.doFilter(request, response);
             return;
         }
