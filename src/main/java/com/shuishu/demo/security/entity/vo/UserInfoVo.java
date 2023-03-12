@@ -97,6 +97,10 @@ public class UserInfoVo implements UserDetails {
      */
     private String userAuthPhoto;
     /**
+     * 同时登录客户端的人数:最小1最大50（默认1）
+     */
+    private Integer userMaxLoginClientNumber;
+    /**
      * 角色集合
      */
     private List<RoleInfoVo> roleInfoList;

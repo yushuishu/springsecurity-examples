@@ -3,6 +3,7 @@ package com.shuishu.demo.security.common.config.security;
 
 import com.shuishu.demo.security.common.config.security.authorization.DynamicAuthorizationManager;
 import com.shuishu.demo.security.common.config.security.filter.LoginFilter;
+import com.shuishu.demo.security.common.config.security.filter.LoginPolicyFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -39,6 +40,7 @@ public class SpringSecurityConfig {
     //private final PhoneLoginFilter phoneLoginFilter;
     private final DynamicAuthorizationManager dynamicAuthorizationManager;
     private final LoginFilter loginFilter;
+    private final LoginPolicyFilter loginPolicyFilter;
 
     /**
      * 自定义RememberMe服务token持久化仓库
@@ -70,6 +72,7 @@ public class SpringSecurityConfig {
 
         httpSecurity
                 .formLogin().disable()
+                .addFilterBefore(loginPolicyFilter, UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(loginFilter, UsernamePasswordAuthenticationFilter.class)
                 //.addFilterBefore(localLoginFilter, UsernamePasswordAuthenticationFilter.class)
                 //.addFilterBefore(emailLoginFilter, UsernamePasswordAuthenticationFilter.class)

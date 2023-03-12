@@ -33,11 +33,9 @@ import org.springframework.validation.beanvalidation.MethodValidationPostProcess
  */
 @SpringBootApplication
 public class SpringSecurityExamplesApplication {
-
     public static void main(String[] args) {
         SpringApplication.run(SpringSecurityExamplesApplication.class, args);
     }
-
 
     @Bean
     public MethodValidationPostProcessor mvp(){

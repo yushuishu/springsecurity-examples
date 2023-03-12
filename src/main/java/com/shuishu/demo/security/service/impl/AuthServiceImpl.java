@@ -32,7 +32,7 @@ public class AuthServiceImpl implements AuthService {
 
 
     @Override
-    public UserInfoVo login(String name, String pwd, UserEnum.AuthType authType, HttpServletResponse response) {
+    public UserInfoVo login(String name, String pwd, UserEnum.AuthType authType, Boolean isRememberMe, HttpServletResponse response) {
         Authentication authentication = null;
         if (UserEnum.AuthType.LOCAL.equals(authType)) {
             authentication = authenticationManager.authenticate(new LocalAuthenticationToken(name, pwd));
@@ -46,7 +46,7 @@ public class AuthServiceImpl implements AuthService {
         UserInfoVo userInfoVO = (UserInfoVo) authentication.getPrincipal();
 
         // 生成token，或者在provider中生成
-        if (userInfoVO != null && !tokenUtils.setUserInfoVo(userInfoVO, response)) {
+        if (userInfoVO != null && !tokenUtils.setUserInfoVo(userInfoVO, isRememberMe, response)) {
             throw new BusinessException(401, "登录失败");
         }
         return userInfoVO;

@@ -15,7 +15,9 @@ public enum RedisKeyEnum {
      * Redis 常用缓存的 key
      */
     KEY_PERMISSION_URL_LIST("PERMISSION_URL_LIST", "权限URL集合"),
-    KEY_CURRENT_ONLINE_NUMBER("CURRENT_ONLINE_NUMBER", "当前在线人数"),
+    GROUP_AUTH_TOKEN("GROUP_AUTH_TOKEN:", "AuthToken分组"),
+    GROUP_REMEMBER_ME_TOKEN("GROUP_REMEMBER_ME_TOKEN:", "RememberMeToken分组"),
+    GROUP_CURRENT_ONLINE_USER("GROUP_CURRENT_ONLINE_USER:", "在线用户分组"),
 
     ;
 

@@ -1,7 +1,10 @@
 package com.shuishu.demo.security.enums;
 
 
+import com.shuishu.demo.security.common.config.security.LoginPolicyConfig;
 import org.springframework.util.StringUtils;
+
+import java.util.Arrays;
 
 /**
  * @author ：谁书-ss
@@ -12,7 +15,7 @@ import org.springframework.util.StringUtils;
  * @description ：
  */
 public interface UserEnum {
-    enum AuthType{
+    enum AuthType {
         /**
          * 登录类型
          */
@@ -29,10 +32,10 @@ public interface UserEnum {
 
         private final String desc;
 
-        public static boolean verifyType(String type){
-            if (StringUtils.hasText(type)){
+        public static boolean verifyType(String type) {
+            if (StringUtils.hasText(type)) {
                 for (AuthType value : values()) {
-                    if (value.type.equals(type)){
+                    if (value.type.equals(type)) {
                         return true;
                     }
                 }
@@ -54,4 +57,22 @@ public interface UserEnum {
             return desc;
         }
     }
+
+    enum LoginPolicy {
+        /**
+         * 登录策略：
+         * ONE：达到最大客户端登录人数，将最早登录的客户端给踢掉（默认登录策略配置：{@link LoginPolicyConfig#getLoginPolicy()}）
+         * TWO：达到最大客户端登录人数，不允许登录
+         */
+        ONE, TWO;
+
+        public static boolean existLoginPolicy(String loginPolicy) {
+            if (StringUtils.hasText(loginPolicy)) {
+                return Arrays.stream(values()).anyMatch(t -> t.name().equals(loginPolicy));
+            }
+            return false;
+        }
+
+    }
+
 }

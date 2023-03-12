@@ -58,7 +58,7 @@ import java.util.List;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class LoginFilter  extends OncePerRequestFilter {
+public class LoginFilter extends OncePerRequestFilter {
     private final TokenUtils tokenUtils;
     private final ResourceService resourceService;
 
@@ -74,7 +74,7 @@ public class LoginFilter  extends OncePerRequestFilter {
         if (SpringSecurityUtils.LOGIN_URL_LOCAL.contains(requestUri) ||
                 SpringSecurityUtils.LOGIN_URL_EMAIL.contains(requestUri) ||
                 SpringSecurityUtils.LOGIN_URL_PHONE.contains(requestUri)) {
-            if (!HttpMethod.POST.matches(request.getMethod())){
+            if (!HttpMethod.POST.matches(request.getMethod())) {
                 ResponseUtils.responseJson(response, new ApiResponse<>(HttpStatus.UNAUTHORIZED.value(), "不支持的请求方式"));
                 return;
             }
@@ -102,15 +102,15 @@ public class LoginFilter  extends OncePerRequestFilter {
         // 用户信息放到上下文
         if (SecurityContextHolder.getContext().getAuthentication() == null) {
             //不同的登录类型 分开处理，可以都只创建一个 Filter：LoginFilter，根据不同的登录url，来创建不同的 Token
-            if (SpringSecurityUtils.LOGIN_URL_LOCAL.contains(requestUri)){
+            if (SpringSecurityUtils.LOGIN_URL_LOCAL.contains(requestUri)) {
                 LocalAuthenticationToken localAuthenticationToken = new LocalAuthenticationToken(userInfoVo.getUserAuthIdentifier(), null, userInfoVo.getAuthorities());
                 localAuthenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(localAuthenticationToken);
-            }else if (SpringSecurityUtils.LOGIN_URL_EMAIL.contains(requestUri)){
+            } else if (SpringSecurityUtils.LOGIN_URL_EMAIL.contains(requestUri)) {
                 EmailAuthenticationToken emailAuthenticationToken = new EmailAuthenticationToken(userInfoVo.getUserAuthIdentifier(), userInfoVo.getAuthorities());
                 emailAuthenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(emailAuthenticationToken);
-            }else if (SpringSecurityUtils.LOGIN_URL_PHONE.contains(requestUri)){
+            } else if (SpringSecurityUtils.LOGIN_URL_PHONE.contains(requestUri)) {
                 PhoneAuthenticationToken phoneAuthenticationToken = new PhoneAuthenticationToken(userInfoVo.getUserAuthIdentifier(), userInfoVo.getAuthorities());
                 phoneAuthenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(phoneAuthenticationToken);

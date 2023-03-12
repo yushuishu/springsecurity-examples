@@ -1,12 +1,17 @@
 shuishu:
+  # 登录策略（默认ONE：com.shuishu.demo.security.common.config.security.LoginPolicyConfig.getLoginPolicy）
+  # ONE: 达到最大客户端登录人数，将最早登录的客户端给踢掉
+  # TWO: 达到最大客户端登录人数，不允许登录
+  login-policy: TWO
   token:
     secret: spring_security_examples
-    auth-token: auth-token
-    refresh-token: refresh-token
-    # auth-token 有效时间（分钟）
-    expire-time: 30
-    # refresh-token 有效期（10080分钟）： 7天 = 1 * 60 * 24 * 7
-    refresh-token-expire-time: 10080
+    auth-token: AuthToken
+    # 此刷新token就是记住我功能的 token
+    remember-me-token: RememberMeToken
+    # auth-token 有效时间（秒） 1小时 = 1 * 60 * 60
+    expire-time: 3600
+    # refresh-token 有效时间（秒）： 30天 = 1 * 60 * 60 * 24 * 30
+    remember-me-token-expire-time: 2592000
     # auth-token 距离过期时间 expire-time 还有多少秒，重新设置有效时间为 expire-time：5分钟 = 1 * 60 * 5
     surplus-refresh-time: 300
 

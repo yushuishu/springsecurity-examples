@@ -59,7 +59,7 @@ public class RedisUtils {
      * @param key 键 不能为null
      * @return 时间(秒) 返回0代表为永久有效
      */
-    public long getExpire(@NotBlank(message = "key不能为空") String key) {
+    public Long getExpire(@NotBlank(message = "key不能为空") String key) {
         return redisTemplate.getExpire(key, TimeUnit.SECONDS);
     }
 

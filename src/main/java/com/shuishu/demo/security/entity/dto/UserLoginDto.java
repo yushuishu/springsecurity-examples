@@ -17,4 +17,6 @@ public class UserLoginDto {
 
     private String password;
 
+    private Boolean isRememberMe;
+
 }

@@ -14,14 +14,15 @@ import jakarta.servlet.http.HttpServletResponse;
  * @description ：
  */
 public interface AuthService {
-
     /**
      * 登录授权
      *
      * @param name -
      * @param pwd -
      * @param authType -
+     * @param isRememberMe -
+     * @param response -
      * @return -
      */
-    UserInfoVo login(String name, String pwd, UserEnum.AuthType authType, HttpServletResponse response);
+    UserInfoVo login(String name, String pwd, UserEnum.AuthType authType, Boolean isRememberMe, HttpServletResponse response);
 }

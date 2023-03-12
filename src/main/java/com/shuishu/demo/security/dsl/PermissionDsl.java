@@ -1,7 +1,6 @@
 package com.shuishu.demo.security.dsl;
 
 
-import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.group.GroupBy;
 import com.querydsl.core.types.Projections;
 import com.shuishu.demo.security.common.config.jdbc.BaseDsl;
@@ -11,9 +10,7 @@ import com.shuishu.demo.security.entity.po.QPermission;
 import com.shuishu.demo.security.entity.po.QRole;
 import com.shuishu.demo.security.entity.po.QRolePermission;
 import com.shuishu.demo.security.entity.vo.PermissionInfoVo;
-import jakarta.annotation.Nonnull;
 import org.springframework.stereotype.Component;
-import org.springframework.util.ObjectUtils;
 
 import java.util.List;
 

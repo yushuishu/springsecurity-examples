@@ -16,7 +16,6 @@ import java.util.List;
  * <p></p>
  */
 public interface ResourceService {
-
     /**
      * 查询所有权限集合
      *

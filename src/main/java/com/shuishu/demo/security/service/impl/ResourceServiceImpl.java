@@ -39,15 +39,15 @@ public class ResourceServiceImpl implements ResourceService {
     @Override
     public List<PermissionCacheDto> findCachePermissionList() {
         Object object = redisUtils.strGet(RedisKeyEnum.KEY_PERMISSION_URL_LIST.getKey());
-        if (object == null){
+        if (object == null) {
             List<PermissionCacheDto> permissionCacheDtoList = permissionDsl.findCachePermissionList();
             redisUtils.strSet(RedisKeyEnum.KEY_PERMISSION_URL_LIST.getKey(), permissionCacheDtoList);
             return permissionCacheDtoList;
         }
         List<PermissionCacheDto> result = new ArrayList<>();
-        if (object instanceof ArrayList<?> permissionCacheDtoList){
+        if (object instanceof ArrayList<?> permissionCacheDtoList) {
             for (Object obj : permissionCacheDtoList) {
-                if (obj instanceof PermissionCacheDto permissionCacheDto){
+                if (obj instanceof PermissionCacheDto permissionCacheDto) {
                     result.add(permissionCacheDto);
                 }
             }

@@ -36,6 +36,7 @@ public class UserAuthDsl extends BaseDsl {
                         qUser.userIsAccountNonExpired,
                         qUser.userIsAccountNonLocked,
                         qUser.userLastLoginDate,
+                        qUser.userMaxLoginClientNumber,
                         qUserAuth.userAuthId,
                         qUserAuth.userAuthType,
                         qUserAuth.userAuthIdentifier,

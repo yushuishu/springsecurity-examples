@@ -59,9 +59,9 @@ public class DynamicAuthorizationManager implements AuthorizationManager<Request
         // 系统权限信息
         List<PermissionCacheDto> cachePermissionList = resourceService.findCachePermissionList();
 
-        if (ObjectUtils.isEmpty(cachePermissionList)){
+        if (ObjectUtils.isEmpty(cachePermissionList)) {
             isGranted = true;
-        }else {
+        } else {
             // 系统权限信息
             List<String> isNotAuthorizationUrlList = cachePermissionList.stream()
                     .filter(t -> !Boolean.TRUE.equals(t.getIsNeedAuthorization()))
@@ -70,28 +70,28 @@ public class DynamicAuthorizationManager implements AuthorizationManager<Request
 
             AntPathMatcher antPathMatcher = new AntPathMatcher();
 
-            if (userInfoVo == null){
+            if (userInfoVo == null) {
                 // 根据URI 校验
-                if (ObjectUtils.isEmpty(isNotAuthorizationUrlList)){
+                if (ObjectUtils.isEmpty(isNotAuthorizationUrlList)) {
                     isGranted = true;
-                }else {
+                } else {
                     // 用户空，那就根据系统放开的权限url 匹配当前匿名用户访问的url
                     for (String url : isNotAuthorizationUrlList) {
-                        if (antPathMatcher.match(url, requestUri)){
+                        if (antPathMatcher.match(url, requestUri)) {
                             isGranted = true;
                         }
                     }
                 }
-            }else {
+            } else {
                 // 根据用户授权信息校验
                 Collection<? extends GrantedAuthority> authorities = userInfoVo.getAuthorities();
-                if (ObjectUtils.isEmpty(authorities)){
+                if (ObjectUtils.isEmpty(authorities)) {
                     isGranted = true;
-                }else {
+                } else {
                     for (GrantedAuthority authority : authorities) {
                         if (authority != null &&
                                 StringUtils.hasText(authority.getAuthority()) &&
-                                antPathMatcher.match(authority.getAuthority(), requestUri)){
+                                antPathMatcher.match(authority.getAuthority(), requestUri)) {
                             isGranted = true;
                         }
                     }

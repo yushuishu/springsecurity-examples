@@ -58,4 +58,7 @@ public class User extends BasePO {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Comment("最后一次登录时间")
     private Date userLastLoginDate;
+    @Comment("同时登录客户端的人数:最小1最大50（默认1）")
+    @Column(nullable = false)
+    private Integer userMaxLoginClientNumber;
 }

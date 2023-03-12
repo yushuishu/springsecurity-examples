@@ -7,10 +7,12 @@ import com.shuishu.demo.security.common.config.security.token.LocalAuthenticatio
 import com.shuishu.demo.security.common.config.security.token.PhoneAuthenticationToken;
 import com.shuishu.demo.security.enums.UserEnum;
 import jakarta.servlet.http.HttpServletRequest;
+import org.aspectj.apache.bcel.generic.RET;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
+import org.springframework.util.StringUtils;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -25,13 +27,27 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 public class SpringSecurityUtils {
     public static final String LOGOUT_URL = "/api/shuishu/demo/auth/logout";
     public static final String LOGIN_URL_LOCAL = "/api/shuishu/demo/auth/local";
-    public static final String LOGIN_URL_PHONE = "/api/shuishu/demo/auth/phone";
     public static final String LOGIN_URL_EMAIL = "/api/shuishu/demo/auth/email";
+    public static final String LOGIN_URL_PHONE = "/api/shuishu/demo/auth/phone";
 
     public static final String LOGIN_USERNAME_KEY = "userAuthIdentifier";
+    public static final String LOGIN_USERNAME_FRONT_KEY = "username";
     public static final String LOGIN_PASSWORD_KEY = "userAuthCredential";
+    public static final String LOGIN_PASSWORD_FRONT_KEY = "password";
     public static final String LOGIN_CAPTCHA = "captcha";
 
+
+    public static String getAuthType(String uri) {
+        if (StringUtils.hasText(uri)) {
+            return switch (uri) {
+                case LOGIN_URL_LOCAL -> UserEnum.AuthType.LOCAL.getType();
+                case LOGIN_URL_EMAIL -> UserEnum.AuthType.EMAIL.getType();
+                case LOGIN_URL_PHONE -> UserEnum.AuthType.PHONE.getType();
+                default -> null;
+            };
+        }
+        return null;
+    }
 
     public static String[] ignoreUrlArray() {
         return new String[]{

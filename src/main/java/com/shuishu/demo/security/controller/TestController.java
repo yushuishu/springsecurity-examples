@@ -21,32 +21,32 @@ import org.springframework.web.bind.annotation.RestController;
 public class TestController {
 
     @PostMapping("add")
-    public ApiResponse<String> add(){
+    public ApiResponse<String> add() {
         return ApiResponse.success("添加成功", "");
     }
 
     @GetMapping("page")
-    public ApiResponse<String> page(){
+    public ApiResponse<String> page() {
         return ApiResponse.success("分页查询成功", "");
     }
 
     @GetMapping("details")
-    public ApiResponse<String> details(){
+    public ApiResponse<String> details() {
         return ApiResponse.success("查询详情成功", "");
     }
 
     @PostMapping("update")
-    public ApiResponse<String> update(){
+    public ApiResponse<String> update() {
         return ApiResponse.success("修改成功", "");
     }
 
     @PostMapping("delete")
-    public ApiResponse<String> delete(){
+    public ApiResponse<String> delete() {
         return ApiResponse.success("删除成功", "");
     }
 
     @GetMapping("enable")
-    public ApiResponse<String> enable(){
+    public ApiResponse<String> enable() {
         return ApiResponse.success("开启关闭成功", "");
     }
 
