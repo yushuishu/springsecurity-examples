@@ -53,7 +53,7 @@ public class UserAuth extends BasePO {
     private String userAuthIdentifier;
     @Comment("凭证信息")
     private String userAuthCredential;
-    @Comment("刷新token")
+    @Comment("刷新token（不是本地记住我，是OAuth第三方的刷新token）")
     private String userAuthRefreshToken;
     @Comment("授权昵称")
     private String userAuthNickname;

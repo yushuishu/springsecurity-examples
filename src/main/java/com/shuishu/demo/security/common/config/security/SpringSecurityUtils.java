@@ -50,13 +50,13 @@ public class SpringSecurityUtils {
     }
 
     public static String[] ignoreUrlArray() {
+        //yml配置文件有访问前缀context-path  SpringSecurity 这里就不能加前缀
         return new String[]{
-                "/api/shuishu/demo/doc.html",
-                "/api/shuishu/demo/webjars/**",
-                "/api/shuishu/demo/v3/api-docs/**",
-                //yml配置文件有访问前缀，所以SpringSecurity这里是不能加前缀的
+                "/doc.html",
+                "/webjars/**",
+                "/v3/api-docs/**",
                 "/auth/**",
-                //过滤器判断使用
+                //加前缀，是为了过滤器判断使用
                 "/api/shuishu/demo/auth/**"
         };
     }
@@ -80,7 +80,6 @@ public class SpringSecurityUtils {
         HttpServletRequest request = ((ServletRequestAttributes) (RequestContextHolder.currentRequestAttributes())).getRequest();
         Authentication authentication = null;
         if (UserEnum.AuthType.LOCAL.equals(authType)) {
-
             SecurityContextHolder.getContext().setAuthentication(new LocalAuthenticationToken(username, password));
         } else if (UserEnum.AuthType.EMAIL.equals(authType)) {
             SecurityContextHolder.getContext().setAuthentication(new EmailAuthenticationToken(username, password));
@@ -90,26 +89,6 @@ public class SpringSecurityUtils {
             throw new BusinessException("不支持的登录方式");
         }
         request.getSession().setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, SecurityContextHolder.getContext());
-    }
-
-    /**
-     * 获取当前登录用户名
-     *
-     * @return 用户名
-     */
-    public static String getCurrentUsername() {
-        return SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
-    }
-
-    /**
-     * 判断是否已登录
-     *
-     * @return true：已登录  false：未登录
-     */
-    public static boolean isLogin() {
-        // SecurityContextHolder.getContext().getAuthentication().isAuthenticated() 永远都是true
-        // 所以即使是当前用户是 anonymousUser 时，也不能用来判断登录状态，必须要判断是否是 AnonymousAuthenticationToken 类型。
-        return !(SecurityContextHolder.getContext().getAuthentication() instanceof AnonymousAuthenticationToken);
     }
 
 }

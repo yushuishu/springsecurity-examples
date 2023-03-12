@@ -12,10 +12,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
-import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
-import javax.sql.DataSource;
 
 /**
  * @author ：谁书-ss
@@ -41,22 +38,6 @@ public class SpringSecurityConfig {
     private final DynamicAuthorizationManager dynamicAuthorizationManager;
     private final LoginFilter loginFilter;
     private final LoginPolicyFilter loginPolicyFilter;
-
-    /**
-     * 自定义RememberMe服务token持久化仓库
-     *
-     * @param datasource datasource
-     * @return -
-     */
-    @Bean
-    public PersistentTokenRepository persistentTokenRepository(DataSource datasource) {
-        final JdbcTokenRepositoryImpl tokenRepository = new JdbcTokenRepositoryImpl();
-        //设置数据源
-        tokenRepository.setDataSource(datasource);
-        //第一次启动的时候 自动建表
-        //tokenRepository.setCreateTableOnStartup(true);
-        return tokenRepository;
-    }
 
 
     @Bean
