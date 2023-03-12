@@ -25,7 +25,13 @@ Redis：
 
 # SQL
 
-运行SQL文件：`public.sql` 创建表结构，并插入数据
+1、创建数据库，配置yml文件
+
+2、maven 执行 clear 和 install 生成 QueryDsl 文件
+
+3、启动项目自动创建表
+
+4、插入数据：运行工程根目录下的SQL文件：`public.sql` 插入数据。
 
 **数据说明：**
 
