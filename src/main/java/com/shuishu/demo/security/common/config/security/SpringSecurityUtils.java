@@ -12,9 +12,12 @@ import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
+import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+
+import java.util.List;
 
 /**
  * @author ：谁书-ss
@@ -65,6 +68,17 @@ public class SpringSecurityUtils {
         for (String ignoreUrl : ignoreUrlArray()) {
             if (requestUri.contains(ignoreUrl.replace("/**", ""))) {
                 return true;
+            }
+        }
+        return false;
+    }
+
+    public static boolean existsInIgnoreUrlArrayForDb(String requestUri, List<String> isNotAuthorizationUrlList) {
+        if (!ObjectUtils.isEmpty(isNotAuthorizationUrlList)) {
+            for (String dbIgnoreUrl : isNotAuthorizationUrlList) {
+                if (requestUri.contains(dbIgnoreUrl.replace("/**", ""))) {
+                    return true;
+                }
             }
         }
         return false;

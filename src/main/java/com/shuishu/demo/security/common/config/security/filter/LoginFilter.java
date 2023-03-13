@@ -90,7 +90,7 @@ public class LoginFilter extends OncePerRequestFilter {
                 .toList();
         // SpringSecurityUtils.ignoreUrlArray() 可以只配置注册登录相关页面，其它所有权限放到数据库，
         // 通过 dynamicAuthorizationManager 动态权限决策管理器，来动态管理
-        if (SpringSecurityUtils.existsInIgnoreUrlArray(requestUri) || isNotAuthorizationUrlList.contains(requestUri)) {
+        if (SpringSecurityUtils.existsInIgnoreUrlArray(requestUri) || SpringSecurityUtils.existsInIgnoreUrlArrayForDb(requestUri, isNotAuthorizationUrlList)) {
             filterChain.doFilter(request, response);
             return;
         }
