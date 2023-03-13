@@ -101,7 +101,7 @@ public class LoginFilter extends OncePerRequestFilter {
         }
         // 用户信息放到上下文
         if (SecurityContextHolder.getContext().getAuthentication() == null) {
-            //不同的登录类型 分开处理，可以都只创建一个 Filter：LoginFilter，根据不同的登录url，来创建不同的 Token
+            //不同的登录类型 可以分开处理。可以只创建一个Filter：LoginFilter，根据不同的登录url，来创建不同的 Token
             if (SpringSecurityUtils.LOGIN_URL_LOCAL.contains(requestUri)) {
                 LocalAuthenticationToken localAuthenticationToken = new LocalAuthenticationToken(userInfoVo.getUserAuthIdentifier(), null, userInfoVo.getAuthorities());
                 localAuthenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));

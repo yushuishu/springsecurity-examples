@@ -35,9 +35,9 @@ public class SpringSecurityConfig {
     //private final LocalLoginFilter localLoginFilter;
     //private final EmailLoginFilter emailLoginFilter;
     //private final PhoneLoginFilter phoneLoginFilter;
-    private final DynamicAuthorizationManager dynamicAuthorizationManager;
     private final LoginFilter loginFilter;
     private final LoginPolicyFilter loginPolicyFilter;
+    private final DynamicAuthorizationManager dynamicAuthorizationManager;
 
 
     @Bean

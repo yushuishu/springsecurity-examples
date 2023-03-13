@@ -179,7 +179,7 @@ public class TokenUtils {
         if (StringUtils.hasText(headerAuthToken)) {
             return getUserInfoVo(request, headerAuthToken);
         } else {
-            // 请求头没有 AuthToken 只有 RefreshToken 也尽最大可能的尝试获取用户信息，创建新的 token，进行缓存
+            // 请求头没有 AuthToken 只有 RememberMeToken 也尽最大可能的尝试获取用户信息，创建新的 token，进行缓存
             String headerRememberMeToken = request.getHeader(ymlRememberMeToken);
             if (StringUtils.hasText(headerRememberMeToken)) {
                 Object userInfoObjForRememberMeToken = redisUtils.strGet(RedisKeyEnum.GROUP_REMEMBER_ME_TOKEN.getKey() + headerRememberMeToken);
